@@ -1,0 +1,25 @@
+{
+  "name": "kvix-store-graphql",
+  "version": "1.0.0",
+  "description": "Graphql API created for an virtual store",
+  "main": "index.ts",
+  "repository": "https://github.com/Cassianokunsch/kvix-store-graphql",
+  "author": "cassiano.kunsch <cassiano.kunsch@outlook.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "ts-node ./src/index.ts",
+    "start:dev": "ts-node-dev --no-notify --respawn --transpileOnly ./src/index.ts"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^3.1.0",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1",
+    "ts-node": "^8.5.4",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.7.4"
+  }
+}
