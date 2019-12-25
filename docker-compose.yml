@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  postgres:
+    container_name: kvix-store-db
+    image: postgres:$POSTGRES_VERSION
+    restart: always
+    environment:
+      POSTGRES_DB: $DATABASE_NAME
+      POSTGRES_USER: $DATABASE_USER
+      POSTGRES_PASSWORD: $DATABASE_PASSWORD
+    volumes:
+      - /var/lib/postgresql/data
+
+  # This container/image is only for access database and check if all is good
+  pgadmin:
+    restart: always
+    image: "dpage/pgadmin4"
+    container_name: kvix-store-pgadmin
+    depends_on:
+      - postgres
+    ports:
+      - "80:80"
+    volumes:
+      - /var/lib/pgadmin
+      - /pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: $PGADMIN_EMAIL
+      PGADMIN_DEFAULT_PASSWORD: $PGADMIN_PASSWORD

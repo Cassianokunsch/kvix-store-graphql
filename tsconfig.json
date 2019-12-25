@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["ES2018"],
+    "lib": ["es6", "ES2018"],
     "module": "commonjs",
     "moduleResolution": "node",
     "importHelpers": true,

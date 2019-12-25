@@ -12,6 +12,9 @@
     "start:dev": "ts-node-dev --no-notify --respawn --transpileOnly ./src/index.ts"
   },
   "devDependencies": {
+    "@types/node": "^13.1.0",
+    "@typescript-eslint/eslint-plugin": "^2.13.0",
+    "@typescript-eslint/parser": "^2.13.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-prettier": "^3.1.2",
@@ -21,5 +24,10 @@
     "ts-node": "^8.5.4",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "pg": "^7.15.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.22"
   }
 }
