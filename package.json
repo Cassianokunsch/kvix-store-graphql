@@ -9,9 +9,11 @@
   "private": true,
   "scripts": {
     "start": "ts-node ./src/index.ts",
-    "start:dev": "ts-node-dev --no-notify --respawn --transpileOnly ./src/index.ts"
+    "start:dev": "ts-node-dev --no-notify --respawn --transpileOnly ./src/index.ts",
+    "start:watch": "nodemon"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/node": "^13.1.0",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",
@@ -20,14 +22,32 @@
     "eslint-plugin-prettier": "^3.1.2",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
+    "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "ts-node": "^8.5.4",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.4"
   },
   "dependencies": {
+    "@graphql-modules/core": "^0.7.13",
+    "apollo-server": "^2.9.14",
+    "bcryptjs": "^2.4.3",
+    "graphql": "^14.5.8",
     "pg": "^7.15.1",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.22"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "yarn start",
+    "ext": "ts"
   }
 }
