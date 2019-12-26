@@ -10,16 +10,21 @@ const { schema, context } = new GraphQLModule({
 });
 
 async function startServer(): Promise<void> {
-  await createConnection();
+  // FIX ME PLEASE
+  await createConnection()
+    .then(() => {
+      const server = new ApolloServer({ schema, context });
 
-  const server = new ApolloServer({ schema, context });
-
-  server
-    .listen()
-    .then(({ url }) => {
-      console.log(`🚀 Server ready at ${url}`);
+      server
+        .listen()
+        .then(({ url }) => {
+          console.log(`🚀 Server ready at ${url}`);
+        })
+        .catch(error => console.log(error));
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      console.log(`Error to connect database:${error}`);
+    });
 }
 
 startServer();
