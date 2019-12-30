@@ -1,30 +1,28 @@
 import 'reflect-metadata';
 import { ApolloServer } from 'apollo-server';
 import { GraphQLModule } from '@graphql-modules/core';
-
-import { CustomerModule } from './modules/customer/customer.module';
+import { AccountModule } from './modules/account/account.module';
 import { createConnection } from 'typeorm';
+import { AuthModule } from './modules/auth/auth.module';
 
 const { schema, context } = new GraphQLModule({
-  imports: [CustomerModule],
+  imports: [AccountModule, AuthModule],
 });
 
 async function startServer(): Promise<void> {
-  // FIX ME PLEASE
   await createConnection()
-    .then(() => {
-      const server = new ApolloServer({ schema, context });
-
-      server
-        .listen()
-        .then(({ url }) => {
-          console.log(`🚀 Server ready at ${url}`);
-        })
-        .catch(error => console.log(error));
-    })
+    .then(() => console.log('Database conect successful'))
     .catch(error => {
       console.log(`Error to connect database:${error}`);
     });
+
+  const server = new ApolloServer({
+    schema,
+    context,
+  });
+
+  const serverInfo = await server.listen();
+  console.log(`🚀  Server ready at ${serverInfo.url}`);
 }
 
 startServer();
