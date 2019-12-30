@@ -1,28 +1,53 @@
-version: "3.7"
+version: '3'
 services:
-  postgres:
-    container_name: kvix-store-db
-    image: postgres:$POSTGRES_VERSION
+  # Backend
+  kvix-server:
+    build: .
     restart: always
+
+    volumes:
+      - './:/kvix'
+    ports:
+      - '4000'
     environment:
-      POSTGRES_DB: $DATABASE_NAME
-      POSTGRES_USER: $DATABASE_USER
-      POSTGRES_PASSWORD: $DATABASE_PASSWORD
+      NODE_ENV: development
+      TYPEORM_CONNECTION: postgres
+      TYPEORM_HOST: kvix-db
+      TYPEORM_USERNAME: postgres
+      TYPEORM_PASSWORD: kvix
+      TYPEORM_DATABASE: postgres
+      TYPEORM_PORT: 5432
+      TYPEORM_SYNCHRONIZE: 'true'
+      TYPEORM_LOGGING: 'true'
+      TYPEORM_ENTITIES: src/modules/**/entity/*.ts
+    depends_on:
+      - kvix-db
+
+  # Postgres Dev Database
+  kvix-db:
+    image: postgres:11.3-alpine
+    container_name: kvix-db
+
+    ports:
+      - '5432'
     volumes:
       - /var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: kvix
 
-  # This container/image is only for access database and check if all is good
-  pgadmin:
+  # PgAdmin4
+  kvix-pgadmin:
+    image: dpage/pgadmin4
+    container_name: kvix-pgadmin
     restart: always
-    image: "dpage/pgadmin4"
-    container_name: kvix-store-pgadmin
+
     depends_on:
-      - postgres
+      - kvix-db
     ports:
-      - "80:80"
+      - '80:80'
     volumes:
       - /var/lib/pgadmin
       - /pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: $PGADMIN_EMAIL
-      PGADMIN_DEFAULT_PASSWORD: $PGADMIN_PASSWORD
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: admin
