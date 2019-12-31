@@ -1,27 +1,27 @@
 version: '3'
 services:
   # Backend
-  kvix-server:
-    build: .
-    restart: always
+  # kvix-server:
+  #   build: .
+  #   restart: always
 
-    volumes:
-      - './:/kvix'
-    ports:
-      - '4000'
-    environment:
-      NODE_ENV: development
-      TYPEORM_CONNECTION: postgres
-      TYPEORM_HOST: kvix-db
-      TYPEORM_USERNAME: postgres
-      TYPEORM_PASSWORD: kvix
-      TYPEORM_DATABASE: postgres
-      TYPEORM_PORT: 5432
-      TYPEORM_SYNCHRONIZE: 'true'
-      TYPEORM_LOGGING: 'true'
-      TYPEORM_ENTITIES: src/modules/**/entity/*.ts
-    depends_on:
-      - kvix-db
+  #   volumes:
+  #     - './:/kvix'
+  #   ports:
+  #     - '4000'
+  #   environment:
+  #     NODE_ENV: development
+  #     TYPEORM_CONNECTION: postgres
+  #     TYPEORM_HOST: kvix-db
+  #     TYPEORM_USERNAME: postgres
+  #     TYPEORM_PASSWORD: kvix
+  #     TYPEORM_DATABASE: postgres
+  #     TYPEORM_PORT: 5432
+  #     TYPEORM_SYNCHRONIZE: 'true'
+  #     TYPEORM_LOGGING: 'true'
+  #     TYPEORM_ENTITIES: src/modules/**/entity/*.ts
+  #   depends_on:
+  #     - kvix-db
 
   # Postgres Dev Database
   kvix-db:
@@ -29,7 +29,7 @@ services:
     container_name: kvix-db
 
     ports:
-      - '5432'
+      - '5433:5432'
     volumes:
       - /var/lib/postgresql/data
     environment:
