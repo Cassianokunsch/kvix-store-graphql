@@ -1,6 +1,8 @@
 import 'reflect-metadata';
-import { Entity, Column, OneToMany, CreateDateColumn, UpdateDateColumn, BeforeInsert, PrimaryGeneratedColumn } from 'typeorm';
-import { ObjectType, Field } from 'type-graphql';
+
+import { BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Field, ObjectType } from 'type-graphql';
+
 import { Address } from './Address';
 import { hash } from 'bcryptjs';
 
@@ -17,7 +19,7 @@ export class Customer {
   @Column({ type: 'varchar', length: 256, unique: true })
   email: string;
 
-  @Column({ type: 'varchar', length: 256 })
+  @Column({ type: 'text' })
   password: string;
 
   @Field()
