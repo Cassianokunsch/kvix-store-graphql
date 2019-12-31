@@ -1,23 +1,25 @@
+import { AuthResolver } from './resolvers/auth.resolvers';
+import { CurrentUser } from './util';
 import { GraphQLModule } from '@graphql-modules/core';
 import { buildSchemaSync } from 'type-graphql';
-import { AuthResolver } from './resolvers/auth.resolvers';
 import { getUser } from './util';
+import { resolversComposition } from './resolvers-composition';
+
+interface AuthContext {
+  currentUser?: CurrentUser;
+}
 
 export const AuthModule = new GraphQLModule({
-  context: ({ req }) => {
-    let token = null;
-    let currentUser = null;
+  context: async ({ req }): Promise<AuthContext> => {
+    let currentUser;
     const authorization = req.get('Authorization');
 
     if (authorization) {
-      token = authorization.replace('Bearer ', '');
-      currentUser = getUser(token);
-    } else {
-      Error('We need a token');
+      const token = authorization.replace('Bearer ', '');
+      currentUser = await getUser(token);
     }
 
     return {
-      token,
       currentUser,
     };
   },
@@ -26,4 +28,5 @@ export const AuthModule = new GraphQLModule({
       resolvers: [AuthResolver],
     }),
   ],
+  resolversComposition,
 });

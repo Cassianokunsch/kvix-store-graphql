@@ -1,11 +1,16 @@
+import { Customer } from '../account/entity/Customer';
+import { getRepository } from 'typeorm';
 import { verify } from 'jsonwebtoken';
 
-interface CurrentUser {
+export interface CurrentUser {
   id: string;
-  roles: [string];
+  name: string;
+  roles: string;
 }
 
-export const getUser = (token: string): CurrentUser => {
+export const getUser = async (token: string): Promise<CurrentUser> => {
   const userId = verify(token, 'junin');
-  return { id: userId.toString(), roles: ['admin'] };
+
+  const user = await getRepository(Customer).findOneOrFail({ where: { id: userId } });
+  return { id: user.id, roles: user.role, name: user.name };
 };

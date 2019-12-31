@@ -19,14 +19,12 @@ class LoginInput {
 export class AuthResolver {
   @Mutation(() => String)
   async login(@Args() { email, password }: LoginInput): Promise<string> {
-    if (!parseEmail.test(email)) throw Error('Bad email format!');
+    //if (!parseEmail.test(email)) throw Error('Bad email format!');
 
     const customer = await getRepository(Customer).findOne({ where: { email } });
-
-    if (customer === undefined) throw Error('Invalid Credentials!');
+    if (!customer) throw Error('Invalid Credentials!');
 
     const valid = await compare(password, customer.password);
-    console.log(!valid);
     if (!valid) throw Error('Invalid Credentials!');
 
     return sign(customer.id, 'junin');
