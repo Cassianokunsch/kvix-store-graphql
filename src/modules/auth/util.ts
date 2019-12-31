@@ -9,7 +9,8 @@ export interface CurrentUser {
 }
 
 export const getUser = async (token: string): Promise<CurrentUser> => {
-  const userId = verify(token, 'junin');
+  if (!process.env.APP_SECRET) throw Error('Erro to get APP_SECRET');
+  const userId = verify(token, process.env.APP_SECRET);
 
   const user = await getRepository(Customer).findOneOrFail({ where: { id: userId } });
   return { id: user.id, roles: user.role, name: user.name };

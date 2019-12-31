@@ -6,7 +6,7 @@ import { CreateAddressInput } from './input/address.inputs';
 import { City } from '../entity/City';
 
 export interface Context {
-  user?: any;
+  currentUser?: any;
 }
 
 @Resolver(Address)
@@ -18,12 +18,12 @@ class AddressResolver {
 
   @Mutation(() => Address)
   async createAddress(@Arg('input') input: CreateAddressInput, @Ctx() ctx: Context): Promise<Address> {
-    console.log(ctx.user);
+    console.log(ctx);
 
     const address = getRepository(Address).create({
       ...input,
       customer: {
-        id: '16983565-909e-4e7c-9039-ea1ab72a2b75',
+        id: '9d59a43b-bce9-4899-b0cc-ab42a3eb2a11',
       },
       city: {
         id: input.cityId,

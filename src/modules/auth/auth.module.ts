@@ -5,12 +5,8 @@ import { buildSchemaSync } from 'type-graphql';
 import { getUser } from './util';
 import { resolversComposition } from './resolvers-composition';
 
-interface AuthContext {
-  currentUser?: CurrentUser;
-}
-
 export const AuthModule = new GraphQLModule({
-  context: async ({ req }): Promise<AuthContext> => {
+  context: async ({ req }): Promise<CurrentUser | undefined> => {
     let currentUser;
     const authorization = req.get('Authorization');
 
@@ -19,9 +15,7 @@ export const AuthModule = new GraphQLModule({
       currentUser = await getUser(token);
     }
 
-    return {
-      currentUser,
-    };
+    return currentUser;
   },
   extraSchemas: [
     buildSchemaSync({

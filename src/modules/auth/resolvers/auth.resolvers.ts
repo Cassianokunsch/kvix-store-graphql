@@ -27,6 +27,8 @@ export class AuthResolver {
     const valid = await compare(password, customer.password);
     if (!valid) throw Error('Invalid Credentials!');
 
-    return sign(customer.id, 'junin');
+    if (!process.env.APP_SECRET) throw Error('Erro to get APP_SECRET');
+
+    return sign(customer.id, process.env.APP_SECRET);
   }
 }
