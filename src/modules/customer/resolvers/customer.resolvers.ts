@@ -1,7 +1,8 @@
 import 'reflect-metadata';
-import { Resolver, Mutation, Arg, Query, FieldResolver, Root } from 'type-graphql';
+import { Resolver, Mutation, Arg, Query, FieldResolver, Root, Ctx } from 'type-graphql';
 import { getRepository } from 'typeorm';
 
+import { Context } from '../../../common/context';
 import { Address } from '../entities/Address';
 import { Customer } from '../entities/Customer';
 import { CreateCustomerInput } from './input/customer.inputs';
@@ -9,11 +10,24 @@ import { CreateCustomerInput } from './input/customer.inputs';
 @Resolver(Customer)
 class CustomerResolver {
   @Mutation(() => Customer)
-  async createCustomer(@Arg('input') input: CreateCustomerInput): Promise<Customer> {
-    const customer = getRepository(Customer).create({ ...input });
+  async createCustomer(@Arg('input') input: CreateCustomerInput, @Ctx() ctx: Context): Promise<Customer> {
+    const queryResult = await getRepository(Customer)
+      .createQueryBuilder('customer')
+      .where('customer.cpf = :cpf OR customer.cell_phone = :cellPhone', { cpf: input.cpf, cellPhone: input.cellPhone })
+      .getOne();
+
+    if (queryResult) {
+      if (queryResult.cpf == input.cpf) {
+        throw Error('CPF is already in use!');
+      }
+
+      if (queryResult.cellPhone == input.cellPhone) {
+        throw Error('Cellphone is already in use!');
+      }
+    }
+
+    const customer = getRepository(Customer).create({ ...input, userId: ctx.currentUser.id });
     return await getRepository(Customer).save(customer);
-    //if (emailInUse) throw Error('Email is already in use!');
-    //if (cpfExist) throw Error('CPF is already in use!');
   }
 
   @Query(() => [Customer], { nullable: true })

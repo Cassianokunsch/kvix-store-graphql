@@ -37,8 +37,7 @@ export class AuthResolver {
 
   @Mutation(() => Payload)
   async signUp(@Args() { email, password }: AuthInput): Promise<Payload> {
-    const user = getRepository(User).create({ email, password });
-    await getRepository(User).save(user);
+    const user = await getRepository(User).save(getRepository(User).create({ email, password }));
 
     if (!process.env.APP_SECRET) throw Error('Erro to get APP_SECRET');
 
