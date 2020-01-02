@@ -1,10 +1,12 @@
 import 'reflect-metadata';
 
-import { CustomerModule } from './modules/customer/customer.module';
-import { ApolloServer } from 'apollo-server';
-import { AuthModule } from './modules/auth/auth.module';
-import { GraphQLModule } from '@graphql-modules/core';
 import { createConnection } from 'typeorm';
+
+import { GraphQLModule } from '@graphql-modules/core';
+import { ApolloServer } from 'apollo-server';
+
+import { AuthModule } from './modules/auth/auth.module';
+import { CustomerModule } from './modules/customer/customer.module';
 
 const { schema, context } = new GraphQLModule({
   imports: [CustomerModule, AuthModule],

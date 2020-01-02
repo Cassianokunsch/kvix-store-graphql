@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Entity } from 'typeorm';
 import { Field, ObjectType } from 'type-graphql';
+import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Entity } from 'typeorm';
 
 @ObjectType()
 @Entity()

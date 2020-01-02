@@ -1,7 +1,9 @@
-import { compare } from 'bcryptjs';
-import { getRepository } from 'typeorm';
 import { Resolver, Mutation, Field, ArgsType, Args } from 'type-graphql';
+import { getRepository } from 'typeorm';
+
+import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
+
 import { User } from '../entities/User';
 import { Payload } from './types/payload.type';
 

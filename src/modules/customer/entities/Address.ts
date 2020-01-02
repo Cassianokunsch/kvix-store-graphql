@@ -1,8 +1,9 @@
 import 'reflect-metadata';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Customer } from './Customer';
 import { ObjectType, Field } from 'type-graphql';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+
 import { City } from './City';
+import { Customer } from './Customer';
 
 @ObjectType()
 @Entity()

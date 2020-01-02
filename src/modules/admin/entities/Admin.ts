@@ -1,7 +1,8 @@
 import 'reflect-metadata';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeInsert } from 'typeorm';
-import { hash } from 'bcryptjs';
 import { Field, ObjectType } from 'type-graphql';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeInsert } from 'typeorm';
+
+import { hash } from 'bcryptjs';
 
 @ObjectType()
 @Entity()

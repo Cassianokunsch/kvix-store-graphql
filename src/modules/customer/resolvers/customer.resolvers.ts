@@ -1,9 +1,10 @@
 import 'reflect-metadata';
-import { Customer } from '../entities/Customer';
-import { getRepository } from 'typeorm';
 import { Resolver, Mutation, Arg, Query, FieldResolver, Root } from 'type-graphql';
-import { CreateCustomerInput } from './input/customer.inputs';
+import { getRepository } from 'typeorm';
+
 import { Address } from '../entities/Address';
+import { Customer } from '../entities/Customer';
+import { CreateCustomerInput } from './input/customer.inputs';
 
 @Resolver(Customer)
 class CustomerResolver {

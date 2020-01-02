@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { InputType, Field } from 'type-graphql';
+
 import { Address } from '../../entities/Address';
 
 @InputType()

@@ -1,9 +1,11 @@
-import { AuthResolver } from './resolvers/auth.resolvers';
-import { GraphQLModule } from '@graphql-modules/core';
 import { applyMiddleware } from 'graphql-middleware';
 import { buildSchemaSync } from 'type-graphql';
-import { getCurrentUser } from './util';
+
+import { GraphQLModule } from '@graphql-modules/core';
+
 import { permissions } from './permissions';
+import { AuthResolver } from './resolvers/auth.resolvers';
+import { getCurrentUser } from './util';
 
 const typeSchema = buildSchemaSync({
   resolvers: [AuthResolver],
