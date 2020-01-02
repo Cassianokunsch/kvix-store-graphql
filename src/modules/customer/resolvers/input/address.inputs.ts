@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { InputType, Field } from 'type-graphql';
-import { Address } from '../../entity/Address';
+import { Address } from '../../entities/Address';
 
 @InputType()
 export class CreateAddressInput implements Partial<Address> {

@@ -1,9 +1,9 @@
 import 'reflect-metadata';
-import { City } from '../entity/City';
+import { City } from '../entities/City';
 import { getRepository } from 'typeorm';
 import { Resolver, Mutation, Arg, Query, FieldResolver, Root } from 'type-graphql';
 import { CreateCityInput } from './input/city.inputs';
-import { Country } from '../entity/Country';
+import { Country } from '../entities/Country';
 
 @Resolver(City)
 class CityResolver {

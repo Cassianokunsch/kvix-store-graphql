@@ -1,24 +1,22 @@
 import 'reflect-metadata';
-import { Customer } from '../entity/Customer';
+import { Customer } from '../entities/Customer';
 import { getRepository } from 'typeorm';
-import { Resolver, Mutation, Arg, Query, FieldResolver, Root, Ctx } from 'type-graphql';
+import { Resolver, Mutation, Arg, Query, FieldResolver, Root } from 'type-graphql';
 import { CreateCustomerInput } from './input/customer.inputs';
-import { Address } from '../entity/Address';
+import { Address } from '../entities/Address';
 
 @Resolver(Customer)
 class CustomerResolver {
   @Mutation(() => Customer)
   async createCustomer(@Arg('input') input: CreateCustomerInput): Promise<Customer> {
-    const customer = getRepository(Customer).create({ ...input, role: 'CUSTOMER' });
+    const customer = getRepository(Customer).create({ ...input });
     return await getRepository(Customer).save(customer);
     //if (emailInUse) throw Error('Email is already in use!');
     //if (cpfExist) throw Error('CPF is already in use!');
   }
 
   @Query(() => [Customer], { nullable: true })
-  async customers(@Ctx() ctx: any): Promise<Customer[]> {
-    console.log(ctx?.currentUser);
-
+  async customers(): Promise<Customer[]> {
     return await getRepository(Customer).find();
   }
 

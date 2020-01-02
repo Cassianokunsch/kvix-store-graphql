@@ -1,10 +1,9 @@
 import 'reflect-metadata';
 
-import { BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Field, ObjectType } from 'type-graphql';
 
 import { Address } from './Address';
-import { hash } from 'bcryptjs';
 
 export type Gender = 'MALE' | 'FEMALE';
 
@@ -14,17 +13,6 @@ export class Customer {
   @Field()
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Field()
-  @Column({ type: 'varchar', length: 256, unique: true })
-  email: string;
-
-  @Column({ type: 'text' })
-  password: string;
-
-  @Field()
-  @Column({ type: 'varchar', length: 256 })
-  role: string;
 
   @Field()
   @Column({ type: 'varchar', length: 256 })
@@ -49,6 +37,9 @@ export class Customer {
   )
   addresses: Address[];
 
+  @Column({ type: 'uuid', name: 'user_id' })
+  userId: string;
+
   @Field()
   @CreateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'created_at' })
   createdAt: string;
@@ -60,9 +51,4 @@ export class Customer {
   @Field()
   @Column({ type: 'boolean', default: () => false })
   deleted: boolean;
-
-  @BeforeInsert()
-  async hashPasswordBeforeInsert(): Promise<void> {
-    this.password = await hash(this.password, 10);
-  }
 }

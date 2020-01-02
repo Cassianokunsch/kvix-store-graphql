@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Country } from '../entity/Country';
+import { Country } from '../entities/Country';
 import { getRepository } from 'typeorm';
 import { Resolver, Mutation, Arg, Query } from 'type-graphql';
 import { CreateCountryInput } from './input/country.inputs';

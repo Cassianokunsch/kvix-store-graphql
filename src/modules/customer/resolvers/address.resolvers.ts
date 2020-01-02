@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { Resolver, Query, Mutation, Arg, Ctx, FieldResolver, Root } from 'type-graphql';
-import { Address } from '../entity/Address';
+import { Address } from '../entities/Address';
 import { getRepository } from 'typeorm';
 import { CreateAddressInput } from './input/address.inputs';
-import { City } from '../entity/City';
+import { City } from '../entities/City';
 
 export interface Context {
   currentUser?: any;
