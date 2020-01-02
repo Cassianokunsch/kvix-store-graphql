@@ -1,26 +1,30 @@
 import { AuthResolver } from './resolvers/auth.resolvers';
-import { CurrentUser } from './util';
 import { GraphQLModule } from '@graphql-modules/core';
+import { applyMiddleware } from 'graphql-middleware';
 import { buildSchemaSync } from 'type-graphql';
-import { getUser } from './util';
-import { resolversComposition } from './resolvers-composition';
+import { getCurrentUser } from './util';
+import { permissions } from './permissions/permissions';
+
+const typeSchema = buildSchemaSync({
+  resolvers: [AuthResolver],
+});
+
+const shieldSchema = applyMiddleware(typeSchema, permissions);
 
 export const AuthModule = new GraphQLModule({
-  context: async ({ req }): Promise<CurrentUser | undefined> => {
+  context: async ({ req }): Promise<object> => {
     let currentUser;
+    let token;
     const authorization = req.get('Authorization');
 
     if (authorization) {
-      const token = authorization.replace('Bearer ', '');
-      currentUser = await getUser(token);
+      token = authorization.replace('Bearer ', '');
+      currentUser = await getCurrentUser(token);
     }
 
-    return currentUser;
+    console.log(currentUser);
+
+    return { currentUser };
   },
-  extraSchemas: [
-    buildSchemaSync({
-      resolvers: [AuthResolver],
-    }),
-  ],
-  resolversComposition,
+  extraSchemas: [shieldSchema],
 });
