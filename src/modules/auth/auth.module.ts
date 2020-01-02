@@ -3,6 +3,7 @@ import { buildSchemaSync } from 'type-graphql';
 
 import { GraphQLModule } from '@graphql-modules/core';
 
+import { CustomerModule } from '../customer/customer.module';
 import { permissions } from './permissions';
 import { AuthResolver } from './resolvers/auth.resolvers';
 import { getCurrentUser } from './util';
@@ -26,5 +27,6 @@ export const AuthModule = new GraphQLModule({
 
     return { currentUser };
   },
+  imports: [CustomerModule],
   extraSchemas: [shieldSchema],
 });
