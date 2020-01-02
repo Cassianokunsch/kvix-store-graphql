@@ -3,7 +3,7 @@ import { GraphQLModule } from '@graphql-modules/core';
 import { applyMiddleware } from 'graphql-middleware';
 import { buildSchemaSync } from 'type-graphql';
 import { getCurrentUser } from './util';
-import { permissions } from './permissions/permissions';
+import { permissions } from './permissions';
 
 const typeSchema = buildSchemaSync({
   resolvers: [AuthResolver],
@@ -21,8 +21,6 @@ export const AuthModule = new GraphQLModule({
       token = authorization.replace('Bearer ', '');
       currentUser = await getCurrentUser(token);
     }
-
-    console.log(currentUser);
 
     return { currentUser };
   },
