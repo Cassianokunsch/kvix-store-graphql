@@ -22,7 +22,7 @@ class AuthInput {
 export class AuthResolver {
   @Mutation(() => Payload)
   async login(@Args() { email, password }: AuthInput): Promise<Payload> {
-    //if (!parseEmail.test(email)) throw Error('Bad email format!');
+    if (!parseEmail.test(email)) throw Error('Bad email format!');
 
     const user = await getRepository(User).findOne({ where: { email } });
     if (!user) throw Error('Invalid Credentials!');
@@ -37,8 +37,9 @@ export class AuthResolver {
 
   @Mutation(() => Payload)
   async signUp(@Args() { email, password }: AuthInput): Promise<Payload> {
-    const user = getRepository(User).create({ email, password });
-    await getRepository(User).save(user);
+    const userToCreate = getRepository(User).create({ email, password });
+
+    const user = await getRepository(User).save(userToCreate);
 
     if (!process.env.APP_SECRET) throw Error('Erro to get APP_SECRET');
 
