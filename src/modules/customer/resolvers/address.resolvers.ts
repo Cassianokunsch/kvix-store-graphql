@@ -2,13 +2,10 @@ import 'reflect-metadata';
 import { Resolver, Query, Mutation, Arg, Ctx, FieldResolver, Root } from 'type-graphql';
 import { getRepository } from 'typeorm';
 
+import { Context } from '../../../common/context';
 import { Address } from '../entities/Address';
 import { City } from '../entities/City';
 import { CreateAddressInput } from './input/address.inputs';
-
-export interface Context {
-  currentUser?: any;
-}
 
 @Resolver(Address)
 class AddressResolver {
@@ -19,12 +16,10 @@ class AddressResolver {
 
   @Mutation(() => Address)
   async createAddress(@Arg('input') input: CreateAddressInput, @Ctx() ctx: Context): Promise<Address> {
-    console.log(ctx);
-
     const address = getRepository(Address).create({
       ...input,
       customer: {
-        id: '9d59a43b-bce9-4899-b0cc-ab42a3eb2a11',
+        id: ctx.currentUser.id,
       },
       city: {
         id: input.cityId,
