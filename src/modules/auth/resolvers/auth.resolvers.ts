@@ -1,34 +1,23 @@
-import { Resolver, Mutation, Field, ArgsType, Args } from 'type-graphql';
+import { Resolver, Mutation, Arg } from 'type-graphql';
 import { getRepository } from 'typeorm';
 
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
+import { errorName } from '../../../common/errors';
 import { User } from '../entities/User';
+import { AuthInput } from './inputs/auth.input';
 import { Payload } from './types/payload.type';
-
-export const parseEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
-
-@ArgsType()
-class AuthInput {
-  @Field()
-  email: string;
-
-  @Field()
-  password: string;
-}
 
 @Resolver()
 export class AuthResolver {
   @Mutation(() => Payload)
-  async login(@Args() { email, password }: AuthInput): Promise<Payload> {
-    if (!parseEmail.test(email)) throw Error('Bad email format!');
-
+  async login(@Arg('authInput') { email, password }: AuthInput): Promise<Payload> {
     const user = await getRepository(User).findOne({ where: { email } });
-    if (!user) throw Error('Invalid Credentials!');
+    if (!user) throw new Error(errorName.INVALID_CREDENTIALS);
 
     const valid = await compare(password, user.password);
-    if (!valid) throw Error('Invalid Credentials!');
+    if (!valid) throw new Error(errorName.INVALID_CREDENTIALS);
 
     if (!process.env.APP_SECRET) throw Error('Erro to get APP_SECRET');
 
@@ -36,9 +25,11 @@ export class AuthResolver {
   }
 
   @Mutation(() => Payload)
-  async signUp(@Args() { email, password }: AuthInput): Promise<Payload> {
-    const userToCreate = getRepository(User).create({ email, password });
+  async signUp(@Arg('authInput') { email, password }: AuthInput): Promise<Payload> {
+    const existUser = await getRepository(User).findOne({ where: { email } });
+    if (existUser) throw new Error(errorName.EMAIL_ALREADY_USE);
 
+    const userToCreate = getRepository(User).create({ email, password });
     const user = await getRepository(User).save(userToCreate);
 
     if (!process.env.APP_SECRET) throw Error('Erro to get APP_SECRET');

@@ -1,27 +1,42 @@
 import 'reflect-metadata';
 
+import { GraphQLError } from 'graphql';
+import { ArgumentValidationError } from 'type-graphql';
 import { createConnection } from 'typeorm';
 
 import { GraphQLModule } from '@graphql-modules/core';
 import { ApolloServer } from 'apollo-server';
 
+import { getErrorCode, getErrorValidation } from './common/errors';
 import { AuthModule } from './modules/auth/auth.module';
 import { CustomerModule } from './modules/customer/customer.module';
 
-const { schema, context } = new GraphQLModule({
-  imports: [CustomerModule, AuthModule],
-});
-
 async function startServer(): Promise<void> {
   await createConnection()
-    .then(() => console.log('Database conect successful'))
+    .then(() => console.log('Database connect successfull'))
     .catch(error => {
       console.log(`Error to connect database:${error}`);
     });
 
+  const { schema, context } = new GraphQLModule({
+    imports: [CustomerModule, AuthModule],
+  });
+
   const server = new ApolloServer({
     schema,
     context,
+    formatError: (err: GraphQLError): any => {
+      const error = getErrorCode(err.message);
+      if (error) {
+        return error;
+      }
+
+      if (err.originalError instanceof ArgumentValidationError) {
+        return getErrorValidation(err.originalError);
+      }
+
+      return err;
+    },
   });
 
   const serverInfo = await server.listen();
