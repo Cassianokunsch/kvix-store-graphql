@@ -4,12 +4,10 @@ import { GraphQLError } from 'graphql';
 import { ArgumentValidationError } from 'type-graphql';
 import { createConnection } from 'typeorm';
 
-import { GraphQLModule } from '@graphql-modules/core';
 import { ApolloServer } from 'apollo-server';
 
 import { getErrorCode, getErrorValidation } from './common/errors';
-import { CustomerModule } from './modules/account/customer/customer.module';
-import { AuthModule } from './modules/auth/auth.module';
+import { AppModule } from './modules/app.module';
 
 async function startServer(): Promise<void> {
   await createConnection()
@@ -18,9 +16,7 @@ async function startServer(): Promise<void> {
       console.log(`Error to connect database:${error}`);
     });
 
-  const { schema, context } = new GraphQLModule({
-    imports: [CustomerModule, AuthModule],
-  });
+  const { schema, context } = AppModule;
 
   const server = new ApolloServer({
     schema,
