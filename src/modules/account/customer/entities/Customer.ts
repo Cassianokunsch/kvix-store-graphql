@@ -23,7 +23,7 @@ export class Customer {
   cpf: string;
 
   @Field()
-  @Column({ type: 'varchar', length: 256, unique: true, name: 'cell_phone' })
+  @Column({ type: 'varchar', length: 9, unique: true, name: 'cell_phone' })
   cellPhone: string;
 
   @Field()
@@ -42,11 +42,11 @@ export class Customer {
 
   @Field()
   @CreateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'created_at' })
-  createdAt: string;
+  createdAt: Date;
 
   @Field()
   @UpdateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'updated_at' })
-  updatedAt: string;
+  updatedAt: Date;
 
   @Field()
   @Column({ type: 'boolean', default: () => false })

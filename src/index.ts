@@ -8,8 +8,8 @@ import { GraphQLModule } from '@graphql-modules/core';
 import { ApolloServer } from 'apollo-server';
 
 import { getErrorCode, getErrorValidation } from './common/errors';
+import { CustomerModule } from './modules/account/customer/customer.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { CustomerModule } from './modules/customer/customer.module';
 
 async function startServer(): Promise<void> {
   await createConnection()

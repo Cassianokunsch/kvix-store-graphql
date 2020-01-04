@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { Resolver, Mutation, Arg, Query, FieldResolver, Root, Ctx } from 'type-graphql';
 import { getRepository } from 'typeorm';
 
-import { Context } from '../../../common/context';
+import { Context } from '../../../../common/context';
 import { Address } from '../entities/Address';
 import { Customer } from '../entities/Customer';
 import { CreateCustomerInput } from './input/customer.inputs';

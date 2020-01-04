@@ -3,7 +3,7 @@ import { buildSchemaSync } from 'type-graphql';
 
 import { GraphQLModule } from '@graphql-modules/core';
 
-import { CustomerModule } from '../customer/customer.module';
+import { CustomerModule } from '../account/customer/customer.module';
 import { permissions } from './permissions';
 import { AuthResolver } from './resolvers/auth.resolvers';
 import { getCurrentUser } from './util';
