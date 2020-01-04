@@ -4,7 +4,7 @@ import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
-import { errorName } from '../../../common/errors';
+import { errorName } from '../../../../common/errors';
 import { User } from '../entities/User';
 import { AuthInput } from './inputs/auth.input';
 import { Payload } from './types/payload.type';
