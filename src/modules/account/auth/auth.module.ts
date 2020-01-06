@@ -4,9 +4,9 @@ import { buildSchemaSync } from 'type-graphql';
 import { GraphQLModule } from '@graphql-modules/core';
 
 import { CustomerModule } from '../customer/customer.module';
+import { getCurrentUser } from './auth.util';
 import { permissions } from './permissions';
 import { AuthResolver } from './resolvers/auth.resolvers';
-import { getCurrentUser } from './util';
 
 const typeSchema = buildSchemaSync({
   resolvers: [AuthResolver],
