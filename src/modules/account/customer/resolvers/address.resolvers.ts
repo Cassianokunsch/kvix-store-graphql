@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { Resolver, Query, Mutation, Arg, Ctx, FieldResolver, Root } from 'type-graphql';
 import { getRepository } from 'typeorm';
 
-import { Context } from '../../../../common/context';
+import { Context } from '../../../shared/context';
 import { Address } from '../entities/Address';
 import { City } from '../entities/City';
 import { CreateAddressInput } from './input/address.inputs';
@@ -25,8 +25,8 @@ class AddressResolver {
         id: input.cityId,
       },
     });
-    await getRepository(Address).save(address);
-    return address;
+
+    return await getRepository(Address).save(address);
   }
 
   @FieldResolver()

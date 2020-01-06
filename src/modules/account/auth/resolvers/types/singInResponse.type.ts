@@ -1,6 +1,6 @@
 import { ObjectType, Field } from 'type-graphql';
 
-import { MutationResponseInterface } from '../../../../../common/mutation.response.interface';
+import { MutationResponseInterface } from '../../../../shared/mutation.response.interface';
 
 @ObjectType({ implements: MutationResponseInterface })
 export class SingInResponse implements MutationResponseInterface {
