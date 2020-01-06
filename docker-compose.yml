@@ -1,18 +1,18 @@
-version: "3"
+version: '3'
 services:
   kvix-server:
-    container_name: "kvix-server"
+    container_name: kvix-server
     restart: always
     build:
       dockerfile: ./dockerfile
       context: .
     image: cassianokunsch/kvix-store-server
     volumes:
-      - "./:/app"
+      - './:/app'
     ports:
-      - "4000:4000"
+      - '4000:4000'
     environment:
-      APP_SECRET: "coe_doido"
+      APP_SECRET: coe_doido
       NODE_ENV: development
       TYPEORM_CONNECTION: postgres
       TYPEORM_HOST: kvix-db
@@ -20,32 +20,27 @@ services:
       TYPEORM_PASSWORD: kvix
       TYPEORM_DATABASE: postgres
       TYPEORM_PORT: 5432
-      TYPEORM_SYNCHRONIZE: "true"
-      #TYPEORM_LOGGING: 'true'
+      TYPEORM_SYNCHRONIZE: 'true'
       TYPEORM_ENTITIES: src/modules/**/entities/*.ts
     depends_on:
       - kvix-db
-
   kvix-db:
-    image: postgres:11.3-alpine
+    image: 'postgres:11.3-alpine'
     container_name: kvix-db
-
     ports:
-      - "5433:5432"
+      - '5433:5432'
     volumes:
       - /var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: kvix
-
   kvix-pgadmin:
     image: dpage/pgadmin4
     container_name: kvix-pgadmin
     restart: always
-
     depends_on:
       - kvix-db
     ports:
-      - "80:80"
+      - '80:80'
     volumes:
       - /var/lib/pgadmin
       - /pgadmin4
