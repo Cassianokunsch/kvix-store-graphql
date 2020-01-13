@@ -11,21 +11,6 @@ import { CreateCustomerInput } from './input/customer.inputs';
 class CustomerResolver {
   @Mutation(() => Customer)
   async createCustomer(@Arg('input') input: CreateCustomerInput, @Ctx() ctx: Context): Promise<Customer> {
-    const queryResult = await getRepository(Customer)
-      .createQueryBuilder('customer')
-      .where('customer.cpf = :cpf OR customer.cell_phone = :cellPhone', { cpf: input.cpf, cellPhone: input.cellPhone })
-      .getOne();
-
-    if (queryResult) {
-      if (queryResult.cpf == input.cpf) {
-        throw Error('CPF is already in use!');
-      }
-
-      if (queryResult.cellPhone == input.cellPhone) {
-        throw Error('Cellphone is already in use!');
-      }
-    }
-
     const customer = getRepository(Customer).create({ ...input, userId: ctx.currentUser.id });
     return await getRepository(Customer).save(customer);
   }
