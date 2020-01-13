@@ -1,20 +1,18 @@
 import 'reflect-metadata';
-import { ObjectType, Field } from 'type-graphql';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 
+import { ObjectType, Field } from 'type-graphql';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
+
+import { CommonContent } from '../../../shared/entities/CommonContent';
 import { City } from './City';
 import { Customer } from './Customer';
 
-@ObjectType()
+@ObjectType({ implements: CommonContent })
 @Entity()
-export class Address {
-  @Field()
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Address extends CommonContent {
   @Field()
   @Column({ type: 'varchar', length: 256 })
-  street: string;
+  private _street: string;
 
   @Field()
   @Column({ type: 'varchar', length: 256 })
@@ -41,15 +39,7 @@ export class Address {
   @JoinColumn({ name: 'city_id' })
   city: City;
 
-  @Field()
-  @CreateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'created_at' })
-  createdAt: Date;
-
-  @Field()
-  @UpdateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'updated_at' })
-  updatedAt: Date;
-
-  @Field()
-  @Column({ type: 'boolean', default: () => false })
-  deleted: boolean;
+  public get blabla(): string {
+    return this._street;
+  }
 }
