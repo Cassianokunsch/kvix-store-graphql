@@ -1,26 +1,25 @@
-import { Column, Entity, PrimaryGeneratedColumn, BeforeInsert, UpdateDateColumn, CreateDateColumn } from 'typeorm';
+import { Column, Entity, BeforeInsert } from 'typeorm';
 
 import { hash } from 'bcryptjs';
 
-@Entity()
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+import { CommonContent } from '../../../shared/entities/CommonContent';
 
+@Entity()
+export class User extends CommonContent {
   @Column({ type: 'varchar', length: 256, unique: true })
   email: string;
 
   @Column({ type: 'text' })
   password: string;
 
-  @CreateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'created_at' })
-  createdAt: Date;
+  @Column({ type: 'varchar', length: 256 })
+  name: string;
 
-  @UpdateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'updated_at' })
-  updatedAt: Date;
+  @Column({ type: 'varchar', length: 11, unique: true })
+  cpf: string;
 
-  @Column({ type: 'boolean', default: () => false })
-  deleted: boolean;
+  @Column({ type: 'varchar', length: 9, unique: true, name: 'cell_phone' })
+  cellPhone: string;
 
   @BeforeInsert()
   async hashPasswordBeforeInsert(): Promise<void> {
