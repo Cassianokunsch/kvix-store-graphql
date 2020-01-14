@@ -34,8 +34,8 @@ const errorType: ErrorNameType = {
   },
 };
 
-export const getErrorCode = (errorName: string): ErrorNameType => {
-  return errorType[errorName];
+export const getErrorCode = (errorNameParameter: string): ErrorNameType => {
+  return errorType[errorNameParameter];
 };
 
 export const getErrorValidation = (err: ArgumentValidationError): ErrorValidation => {
