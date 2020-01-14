@@ -4,8 +4,8 @@ import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
-import { errorName } from '../../../shared/errors';
-import { User } from '../entities/User';
+import { errorName } from '../../../helpers/errors';
+import { Customer } from '../../customer/entities/Customer';
 import { AuthInput } from './inputs/auth.input';
 import { SignUpInput } from './inputs/signUp.input';
 import { Payload } from './types/payload.type';
@@ -14,24 +14,24 @@ import { Payload } from './types/payload.type';
 export class AuthResolver {
   @Mutation(() => Payload)
   async login(@Arg('authInput') { email, password }: AuthInput): Promise<Payload> {
-    const user = await getRepository(User).findOne({ where: { email } });
-    if (!user) throw new Error(errorName.INVALID_CREDENTIALS);
+    const customer = await getRepository(Customer).findOne({ where: { email } });
+    if (!customer) throw new Error(errorName.INVALID_CREDENTIALS);
 
-    const valid = await compare(password, user.password);
+    const valid = await compare(password, customer.password);
     if (!valid) throw new Error(errorName.INVALID_CREDENTIALS);
 
     if (!process.env.APP_SECRET) throw Error('Erro to get APP_SECRET');
 
-    return { token: sign({ id: user.id, role: 'SOME RULES' }, process.env.APP_SECRET) };
+    return { token: sign({ id: customer.id, role: 'SOME RULES' }, process.env.APP_SECRET) };
   }
 
   @Mutation(() => Payload)
   async signUp(@Arg('signUpInput') signUpInput: SignUpInput): Promise<Payload> {
-    const { email, password, cellPhone, cpf, name } = signUpInput;
+    const { email, password, name, cpf, cellPhone, gender } = signUpInput;
 
-    const queryResult = await getRepository(User)
-      .createQueryBuilder('user')
-      .where('user.cpf = :cpf OR user.cell_phone = :cellPhone OR user.email = :email', { cpf, cellPhone, email })
+    const queryResult = await getRepository(Customer)
+      .createQueryBuilder('customer')
+      .where('customer.cpf = :cpf OR customer.cell_phone = :cellPhone OR customers.email = :email', { cpf, cellPhone, email })
       .getOne();
 
     if (queryResult) {
@@ -42,11 +42,11 @@ export class AuthResolver {
       if (queryResult.email == email) throw new Error(errorName.EMAIL_ALREADY_USE);
     }
 
-    const userToCreate = getRepository(User).create({ email, password, cellPhone, cpf, name });
-    const user = await getRepository(User).save(userToCreate);
+    const customerToCreate = getRepository(Customer).create({ email, password, name, cpf, cellPhone, gender });
+    const customer = await getRepository(Customer).save(customerToCreate);
 
     if (!process.env.APP_SECRET) throw Error('Erro to get APP_SECRET');
 
-    return { token: sign({ id: user.id, role: 'SOME RULES' }, process.env.APP_SECRET) };
+    return { token: sign({ id: customer.id, role: 'SOME RULES' }, process.env.APP_SECRET) };
   }
 }
