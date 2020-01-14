@@ -1,25 +1,23 @@
-import { Column, Entity, BeforeInsert } from 'typeorm';
+import { Field, InterfaceType } from 'type-graphql';
+import { Column, BeforeInsert } from 'typeorm';
 
 import { hash } from 'bcryptjs';
 
-import { CommonContent } from '../../../shared/entities/CommonContent';
+import { CommonContent } from '../../../helpers/entities/CommonContent';
 
-@Entity()
-export class User extends CommonContent {
+@InterfaceType()
+export abstract class User extends CommonContent {
+  @Field()
   @Column({ type: 'varchar', length: 256, unique: true })
   email: string;
 
+  @Field()
   @Column({ type: 'text' })
   password: string;
 
+  @Field()
   @Column({ type: 'varchar', length: 256 })
   name: string;
-
-  @Column({ type: 'varchar', length: 11, unique: true })
-  cpf: string;
-
-  @Column({ type: 'varchar', length: 9, unique: true, name: 'cell_phone' })
-  cellPhone: string;
 
   @BeforeInsert()
   async hashPasswordBeforeInsert(): Promise<void> {
