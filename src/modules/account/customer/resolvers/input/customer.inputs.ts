@@ -7,4 +7,10 @@ import { Customer, Gender } from '../../entities/Customer';
 export class CreateCustomerInput implements Partial<Customer> {
   @Field()
   gender: Gender;
+
+  @Field()
+  cpf: string;
+
+  @Field()
+  cellPhone: string;
 }
