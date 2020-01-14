@@ -3,8 +3,8 @@ import { getRepository } from 'typeorm';
 import { createWriteStream } from 'fs';
 import { Stream } from 'stream';
 
-import { Image } from '../entities/Image';
-import { Upload } from './types/image.types';
+import { Upload } from '../schemas/interfaces/UploadInterface';
+import { Image } from '../schemas/types/ImageType';
 
 const uploadDir = __dirname + '/../../../uploads/';
 

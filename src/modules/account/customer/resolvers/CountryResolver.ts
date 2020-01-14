@@ -2,8 +2,8 @@ import 'reflect-metadata';
 import { Resolver, Mutation, Arg, Query } from 'type-graphql';
 import { getRepository } from 'typeorm';
 
-import { Country } from '../entities/Country';
-import { CreateCountryInput } from './inputs/country.inputs';
+import { CreateCountryInput } from '../schemas/inputs/CountryInputs';
+import { Country } from '../schemas/types/CountryType';
 
 @Resolver(Country)
 class CountryResolver {

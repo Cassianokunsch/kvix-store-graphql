@@ -2,9 +2,9 @@ import { GraphQLUpload } from 'graphql-upload';
 import { Resolver, Query, Mutation, Arg } from 'type-graphql';
 import { getRepository } from 'typeorm';
 
-import { Category } from '../entities/Category';
-import { ImageResolver } from './image.resolvers';
-import { Upload } from './types/image.types';
+import { Upload } from '../schemas/interfaces/UploadInterface';
+import { Category } from '../schemas/types/CategoryType';
+import { ImageResolver } from './ImageResolver';
 
 @Resolver(Category)
 export class CategoryResolver {

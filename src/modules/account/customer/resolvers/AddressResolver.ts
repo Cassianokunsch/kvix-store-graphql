@@ -2,10 +2,10 @@ import 'reflect-metadata';
 import { Resolver, Query, Mutation, Arg, Ctx, FieldResolver, Root } from 'type-graphql';
 import { getRepository } from 'typeorm';
 
-import { Context } from '../../../helpers/context';
-import { Address } from '../entities/Address';
-import { City } from '../entities/City';
-import { CreateAddressInput } from './inputs/address.inputs';
+import { Context } from '../../../helpers/Context';
+import { CreateAddressInput } from '../schemas/inputs/AddressInputs';
+import { Address } from '../schemas/types/AddressType';
+import { City } from '../schemas/types/CityType';
 
 @Resolver(Address)
 class AddressResolver {

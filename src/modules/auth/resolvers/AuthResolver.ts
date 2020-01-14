@@ -4,16 +4,16 @@ import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
-import { Customer } from '../../account/customer/entities/Customer';
-import { errorName } from '../../helpers/errors';
-import { AuthInput } from '../schemas/inputs/AuthInput';
+import { Customer } from '../../account/customer/schemas/types/CustomerType';
+import { errorName } from '../../helpers/Errors';
+import { LoginInput } from '../schemas/inputs/LoginInput';
 import { SignUpInput } from '../schemas/inputs/SignInInput';
-import { Payload } from '../schemas/types/SignInResponseType';
+import { Payload } from '../schemas/types/PayloadType';
 
 @Resolver()
 export class AuthResolver {
   @Mutation(() => Payload)
-  async login(@Arg('authInput') { email, password }: AuthInput): Promise<Payload> {
+  async login(@Arg('authInput') { email, password }: LoginInput): Promise<Payload> {
     const customer = await getRepository(Customer).findOne({ where: { email } });
     if (!customer) throw new Error(errorName.INVALID_CREDENTIALS);
 

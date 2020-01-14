@@ -3,7 +3,7 @@ import { InputType, Field } from 'type-graphql';
 import { MinLength, IsEmail } from 'class-validator';
 
 @InputType()
-export class AuthInput {
+export class LoginInput {
   @Field()
   @IsEmail()
   email: string;
