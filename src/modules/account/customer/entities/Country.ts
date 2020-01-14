@@ -1,12 +1,16 @@
 import 'reflect-metadata';
 import { Field, ObjectType } from 'type-graphql';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-import { CommonContent } from '../../../helpers/entities/CommonContent';
+import { CommonCollumns } from '../../../helpers/CommonCollumns';
 
-@ObjectType({ implements: CommonContent })
+@ObjectType()
 @Entity()
-export class Country extends CommonContent {
+export class Country {
+  @Field()
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
   @Field()
   @Column({ type: 'varchar', length: 256, unique: true })
   name: string;
@@ -14,4 +18,7 @@ export class Country extends CommonContent {
   @Field()
   @Column({ type: 'varchar', length: 2, unique: true })
   abbr: string;
+
+  @Column(() => CommonCollumns)
+  commonCollumns: CommonCollumns;
 }

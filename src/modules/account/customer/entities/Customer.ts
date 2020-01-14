@@ -3,7 +3,8 @@ import 'reflect-metadata';
 import { Field, ObjectType } from 'type-graphql';
 import { Column, Entity, OneToMany } from 'typeorm';
 
-import { User } from '../../auth/entities/User';
+import { User } from '../../../auth/entities/User';
+import { CommonCollumns } from '../../../helpers/CommonCollumns';
 import { Address } from './Address';
 
 export type Gender = 'MALE' | 'FEMALE';
@@ -29,4 +30,7 @@ export class Customer extends User {
     c => c.customer,
   )
   addresses: Address[];
+
+  @Column(() => CommonCollumns)
+  commonCollumns: CommonCollumns;
 }
