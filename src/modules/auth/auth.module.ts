@@ -1,18 +1,9 @@
-import { applyMiddleware } from 'graphql-middleware';
 import { buildSchemaSync } from 'type-graphql';
 
 import { GraphQLModule } from '@graphql-modules/core';
 
-import { CustomerModule } from '../customer/customer.module';
 import { getCurrentUser } from './auth.util';
-import { permissions } from './permissions';
 import { AuthResolver } from './resolvers/auth.resolvers';
-
-const typeSchema = buildSchemaSync({
-  resolvers: [AuthResolver],
-});
-
-const shieldSchema = applyMiddleware(typeSchema, permissions);
 
 export const AuthModule = new GraphQLModule({
   context: async ({ req }): Promise<object> => {
@@ -27,6 +18,9 @@ export const AuthModule = new GraphQLModule({
 
     return { currentUser };
   },
-  imports: [CustomerModule],
-  extraSchemas: [shieldSchema],
+  extraSchemas: [
+    buildSchemaSync({
+      resolvers: [AuthResolver],
+    }),
+  ],
 });

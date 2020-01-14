@@ -1,6 +1,12 @@
-import { ObjectType, Field } from 'type-graphql';
+import { Field, ObjectType } from 'type-graphql';
 
-import { MutationResponseInterface } from '../../../../helpers/mutation.response.interface';
+import { MutationResponseInterface } from '../../helpers/mutation.response.interface';
+
+@ObjectType()
+export class Payload {
+  @Field()
+  token: string;
+}
 
 @ObjectType({ implements: MutationResponseInterface })
 export class SingInResponse implements MutationResponseInterface {

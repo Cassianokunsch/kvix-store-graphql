@@ -4,11 +4,10 @@ import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
-import { errorName } from '../../../helpers/errors';
-import { Customer } from '../../customer/entities/Customer';
-import { AuthInput } from './inputs/auth.input';
-import { SignUpInput } from './inputs/signUp.input';
-import { Payload } from './types/payload.type';
+import { Customer } from '../../account/customer/entities/Customer';
+import { errorName } from '../../helpers/errors';
+import { AuthInput, SignUpInput } from './auth.input';
+import { Payload } from './auth.types';
 
 @Resolver()
 export class AuthResolver {
