@@ -7,7 +7,7 @@ import { createConnection } from 'typeorm';
 import { ApolloServer } from 'apollo-server';
 
 import { AppModule } from './modules/app.module';
-import { getErrorCode, getErrorValidation } from './modules/shared/errors';
+import { getErrorCode, getErrorValidation } from './modules/helpers/errors';
 
 async function startServer(): Promise<void> {
   await createConnection()

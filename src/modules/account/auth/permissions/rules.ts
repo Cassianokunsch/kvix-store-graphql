@@ -1,6 +1,6 @@
 import { rule } from 'graphql-shield';
 
-import { errorName } from '../../../shared/errors';
+import { errorName } from '../../../helpers/errors';
 
 export const isAuthenticated = rule()(async (_parent, _args, _ctx) => {
   if (_ctx.currentUser) {
