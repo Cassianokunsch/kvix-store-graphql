@@ -4,7 +4,7 @@ import { getRepository } from 'typeorm';
 
 import { Address } from '../entities/Address';
 import { Customer } from '../entities/Customer';
-import { CreateCustomerInput } from './input/customer.inputs';
+import { CreateCustomerInput } from './inputs/customer.inputs';
 
 @Resolver(Customer)
 class CustomerResolver {

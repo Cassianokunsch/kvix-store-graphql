@@ -5,7 +5,7 @@ import { getRepository } from 'typeorm';
 import { Context } from '../../../helpers/context';
 import { Address } from '../entities/Address';
 import { City } from '../entities/City';
-import { CreateAddressInput } from './input/address.inputs';
+import { CreateAddressInput } from './inputs/address.inputs';
 
 @Resolver(Address)
 class AddressResolver {

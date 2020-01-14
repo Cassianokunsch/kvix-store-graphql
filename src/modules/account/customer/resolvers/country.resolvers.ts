@@ -3,7 +3,7 @@ import { Resolver, Mutation, Arg, Query } from 'type-graphql';
 import { getRepository } from 'typeorm';
 
 import { Country } from '../entities/Country';
-import { CreateCountryInput } from './input/country.inputs';
+import { CreateCountryInput } from './inputs/country.inputs';
 
 @Resolver(Country)
 class CountryResolver {

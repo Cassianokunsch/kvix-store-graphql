@@ -4,7 +4,7 @@ import { getRepository } from 'typeorm';
 
 import { City } from '../entities/City';
 import { Country } from '../entities/Country';
-import { CreateCityInput } from './input/city.inputs';
+import { CreateCityInput } from './inputs/city.inputs';
 
 @Resolver(City)
 class CityResolver {
