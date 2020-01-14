@@ -1,8 +1,7 @@
 import 'reflect-metadata';
-import { Resolver, Mutation, Arg, Query, FieldResolver, Root, Ctx } from 'type-graphql';
+import { Resolver, Mutation, Arg, Query, FieldResolver, Root } from 'type-graphql';
 import { getRepository } from 'typeorm';
 
-import { Context } from '../../../shared/context';
 import { Address } from '../entities/Address';
 import { Customer } from '../entities/Customer';
 import { CreateCustomerInput } from './input/customer.inputs';
@@ -10,8 +9,8 @@ import { CreateCustomerInput } from './input/customer.inputs';
 @Resolver(Customer)
 class CustomerResolver {
   @Mutation(() => Customer)
-  async createCustomer(@Arg('input') input: CreateCustomerInput, @Ctx() ctx: Context): Promise<Customer> {
-    const customer = getRepository(Customer).create({ ...input, userId: ctx.currentUser.id });
+  async createCustomer(@Arg('input') input: CreateCustomerInput): Promise<Customer> {
+    const customer = getRepository(Customer).create({ ...input });
     return await getRepository(Customer).save(customer);
   }
 
