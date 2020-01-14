@@ -1,8 +1,11 @@
 import { GraphQLModule } from '@graphql-modules/core';
 
 import { AccountModule } from './account/account.module';
+import { AuthModule } from './auth/auth.module';
+import { resolversComposition } from './helpers/resolvers.composition';
 import { ProductModule } from './product/product.module';
 
 export const AppModule = new GraphQLModule({
-  imports: [AccountModule, ProductModule],
+  imports: [AccountModule, ProductModule, AuthModule],
+  resolversComposition,
 });
