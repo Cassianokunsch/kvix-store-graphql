@@ -6,8 +6,9 @@ import { sign } from 'jsonwebtoken';
 
 import { Customer } from '../../account/customer/entities/Customer';
 import { errorName } from '../../helpers/errors';
-import { AuthInput, SignUpInput } from './auth.input';
-import { Payload } from './auth.types';
+import { AuthInput } from '../schemas/inputs/AuthInput';
+import { SignUpInput } from '../schemas/inputs/SignInInput';
+import { Payload } from '../schemas/types/SignInResponseType';
 
 @Resolver()
 export class AuthResolver {

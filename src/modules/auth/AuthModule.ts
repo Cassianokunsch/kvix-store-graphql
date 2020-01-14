@@ -2,8 +2,8 @@ import { buildSchemaSync } from 'type-graphql';
 
 import { GraphQLModule } from '@graphql-modules/core';
 
-import { getCurrentUser } from './auth.util';
-import { AuthResolver } from './resolvers/auth.resolvers';
+import { AuthResolver } from './resolvers/AuthResolver';
+import { getCurrentUser } from './Util';
 
 export const AuthModule = new GraphQLModule({
   context: async ({ req }): Promise<object> => {

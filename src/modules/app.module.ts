@@ -1,7 +1,7 @@
 import { GraphQLModule } from '@graphql-modules/core';
 
 import { AccountModule } from './account/account.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './auth/AuthModule';
 import { resolversComposition } from './helpers/resolvers.composition';
 import { ProductModule } from './product/product.module';
 
