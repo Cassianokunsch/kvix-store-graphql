@@ -1,4 +1,7 @@
 {
+  "sync.gist": "ea985dad5247940cfab63929e453812d",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
   "eslint.autoFixOnSave": true,
   "eslint.validate": ["javascript", { "language": "typescript", "autoFix": true }],
   "editor.formatOnSave": true,
@@ -10,5 +13,7 @@
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+
+  "sonarlint.ls.javaHome": "\\usr\\lib\\jvm\\java-8-openjdk"
 }
