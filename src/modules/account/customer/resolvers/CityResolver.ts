@@ -1,29 +1,28 @@
 import 'reflect-metadata';
 import { Resolver, Mutation, Arg, Query, FieldResolver, Root } from 'type-graphql';
-import { getRepository } from 'typeorm';
 
 import { CreateCityInput } from '../schemas/inputs/CityInputs';
-import { City } from '../schemas/types/CityType';
-import { Country } from '../schemas/types/CountryType';
+import { CityType } from '../schemas/types/CityType';
+import { CountryType } from '../schemas/types/CountryType';
+import { CityService } from '../services/CityService';
 
-@Resolver(City)
+@Resolver(CityType)
 class CityResolver {
-  @Mutation(() => City)
-  async createCity(@Arg('input') input: CreateCityInput): Promise<City> {
-    const { name, countryId } = input;
-    const city = getRepository(City).create({ name, country: { id: countryId } });
-    return await getRepository(City).save(city);
+  private _cityService: CityService = new CityService();
+
+  @Mutation(() => CityType)
+  async createCityType(@Arg('input') { name, countryId }: CreateCityInput): Promise<CityType> {
+    return await this._cityService.createCity(name, countryId);
   }
 
-  @Query(() => [City], { nullable: true })
-  async cities(): Promise<City[]> {
-    return await getRepository(City).find();
+  @Query(() => [CityType], { nullable: true })
+  async cities(): Promise<CityType[]> {
+    return await this._cityService.getAllCities();
   }
 
   @FieldResolver()
-  async country(@Root() city: City): Promise<Country> {
-    const { country } = await getRepository(City).findOneOrFail({ where: { id: city.id }, relations: ['country'] });
-    return country;
+  async country(@Root() cityType: CityType): Promise<CountryType> {
+    return this._cityService.getFieldResolverCountry(cityType.id);
   }
 }
 

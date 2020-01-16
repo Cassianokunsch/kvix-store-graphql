@@ -1,28 +1,28 @@
 import 'reflect-metadata';
 import { Resolver, Mutation, Arg, Query, FieldResolver, Root } from 'type-graphql';
-import { getRepository } from 'typeorm';
 
 import { CreateCustomerInput } from '../schemas/inputs/CustomerInputs';
-import { Address } from '../schemas/types/AddressType';
-import { Customer } from '../schemas/types/CustomerType';
+import { AddressType } from '../schemas/types/AddressType';
+import { CustomerType } from '../schemas/types/CustomerType';
+import { CustomerService } from '../services/CustomerService';
 
-@Resolver(Customer)
+@Resolver(CustomerType)
 class CustomerResolver {
-  @Mutation(() => Customer)
-  async createCustomer(@Arg('input') input: CreateCustomerInput): Promise<Customer> {
-    const customer = getRepository(Customer).create({ ...input });
-    return await getRepository(Customer).save(customer);
+  private _customerService: CustomerService = new CustomerService();
+
+  @Mutation(() => CustomerType)
+  async createCustomer(@Arg('input') { cellPhone, cpf, gender }: CreateCustomerInput): Promise<CustomerType> {
+    return await this._customerService.createCustomer(cellPhone, cpf, gender);
   }
 
-  @Query(() => [Customer], { nullable: true })
-  async customers(): Promise<Customer[]> {
-    return await getRepository(Customer).find();
+  @Query(() => [CustomerType], { nullable: true })
+  async customers(): Promise<CustomerType[]> {
+    return await this._customerService.getAllCustomers();
   }
 
   @FieldResolver()
-  async addresses(@Root() customer: Customer): Promise<Address[]> {
-    const { addresses } = await getRepository(Customer).findOneOrFail({ where: { id: customer.id }, relations: ['addresses'] });
-    return addresses;
+  async addresses(@Root() { id }: CustomerType): Promise<AddressType[]> {
+    return await this._customerService.getFieldResolverAddress(id);
   }
 }
 

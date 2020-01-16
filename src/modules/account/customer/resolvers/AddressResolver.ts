@@ -1,38 +1,30 @@
 import 'reflect-metadata';
 import { Resolver, Query, Mutation, Arg, Ctx, FieldResolver, Root } from 'type-graphql';
-import { getRepository } from 'typeorm';
 
 import { Context } from '../../../helpers/Context';
 import { CreateAddressInput } from '../schemas/inputs/AddressInputs';
-import { Address } from '../schemas/types/AddressType';
-import { City } from '../schemas/types/CityType';
+import { AddressType } from '../schemas/types/AddressType';
+import { CityType } from '../schemas/types/CityType';
+import { AddressService } from '../services/AddressService';
 
-@Resolver(Address)
+@Resolver(AddressType)
 class AddressResolver {
-  @Query(() => [Address], { nullable: true })
-  async addresses(): Promise<Address[]> {
-    return await getRepository(Address).find();
+  private _addressService: AddressService = new AddressService();
+
+  @Query(() => [AddressType], { nullable: true })
+  async addresses(): Promise<AddressType[]> {
+    return await this._addressService.getAllAddresses();
   }
 
-  @Mutation(() => Address)
-  async createAddress(@Arg('input') input: CreateAddressInput, @Ctx() ctx: Context): Promise<Address> {
-    const address = getRepository(Address).create({
-      ...input,
-      customer: {
-        id: ctx.currentUser.id,
-      },
-      city: {
-        id: input.cityId,
-      },
-    });
-
-    return await getRepository(Address).save(address);
+  @Mutation(() => AddressType)
+  async createAddress(@Arg('input') createAddressInput: CreateAddressInput, @Ctx() { currentUser }: Context): Promise<AddressType> {
+    const { cityId, neighborhood, number, street, complement } = createAddressInput;
+    return await this._addressService.createAddress(cityId, neighborhood, number, street, currentUser.id, complement);
   }
 
   @FieldResolver()
-  async city(@Root() address: Address): Promise<City> {
-    const { city } = await getRepository(Address).findOneOrFail({ where: { id: address.id }, relations: ['city'] });
-    return city;
+  async city(@Root() address: AddressType): Promise<CityType> {
+    return this._addressService.getFieldResolverCity(address.id);
   }
 }
 

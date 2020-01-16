@@ -1,22 +1,23 @@
 import 'reflect-metadata';
 import { Resolver, Mutation, Arg, Query } from 'type-graphql';
-import { getRepository } from 'typeorm';
 
 import { CreateCountryInput } from '../schemas/inputs/CountryInputs';
-import { Country } from '../schemas/types/CountryType';
+import { CountryType } from '../schemas/types/CountryType';
+import { CountryService } from '../services/CountryService';
 
-@Resolver(Country)
-class CountryResolver {
-  @Mutation(() => Country)
-  async createCountry(@Arg('input') input: CreateCountryInput): Promise<Country> {
-    const country = getRepository(Country).create(input);
-    return await getRepository(Country).save(country);
+@Resolver(CountryType)
+class CountryTypeResolver {
+  private _countryService: CountryService = new CountryService();
+
+  @Mutation(() => CountryType)
+  async createCountry(@Arg('input') { abbr, name }: CreateCountryInput): Promise<CountryType> {
+    return await this._countryService.createCountry(abbr, name);
   }
 
-  @Query(() => [Country], { nullable: true })
-  async countries(): Promise<Country[]> {
-    return await getRepository(Country).find();
+  @Query(() => [CountryType], { nullable: true })
+  async countries(): Promise<CountryType[]> {
+    return await this._countryService.getAllCountries();
   }
 }
 
-export default CountryResolver;
+export default CountryTypeResolver;
