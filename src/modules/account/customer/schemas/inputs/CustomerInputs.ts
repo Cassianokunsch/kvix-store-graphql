@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 import { InputType, Field } from 'type-graphql';
 
-import { Customer, Gender } from '../../entities/Customer';
+import { CustomerType, Gender } from '../types/CustomerType';
 
 @InputType()
-export class CreateCustomerInput implements Partial<Customer> {
+export class CreateCustomerInput implements Partial<CustomerType> {
   @Field()
   gender: Gender;
 
