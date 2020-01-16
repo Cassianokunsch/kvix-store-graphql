@@ -1,7 +1,7 @@
 import { Field, InterfaceType } from 'type-graphql';
 
 @InterfaceType()
-export class User {
+export class UserType {
   @Field()
   id: string;
 

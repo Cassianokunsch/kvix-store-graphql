@@ -2,11 +2,11 @@ import 'reflect-metadata';
 
 import { ObjectType, Field } from 'type-graphql';
 
-import { City } from './CityType';
-import { Customer } from './CustomerType';
+import { CityType } from './CityType';
+import { CustomerType } from './CustomerType';
 
 @ObjectType()
-export class Address {
+export class AddressType {
   @Field()
   id: string;
 
@@ -25,8 +25,8 @@ export class Address {
   @Field()
   complement?: string;
 
-  customer: Customer;
+  customer: CustomerType;
 
-  @Field(() => City)
-  city: City;
+  @Field(() => CityType)
+  city: CityType;
 }

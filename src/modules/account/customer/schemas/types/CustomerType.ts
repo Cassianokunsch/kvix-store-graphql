@@ -2,13 +2,14 @@ import 'reflect-metadata';
 
 import { Field, ObjectType } from 'type-graphql';
 
-import { User } from '../../../../auth/schemas/types/UserType';
-import { Address } from './AddressType';
+import { AddressType } from './AddressType';
 
 export type Gender = 'MALE' | 'FEMALE';
+@ObjectType()
+export class CustomerType {
+  @Field()
+  id: string;
 
-@ObjectType({ implements: User })
-export class Customer extends User {
   @Field()
   cpf: string;
 
@@ -16,8 +17,8 @@ export class Customer extends User {
   cellPhone: string;
 
   @Field()
-  gender: Gender;
+  gender: string;
 
-  @Field(() => [Address], { nullable: true })
-  addresses: Address[];
+  @Field(() => [AddressType], { nullable: true })
+  addresses: AddressType[];
 }

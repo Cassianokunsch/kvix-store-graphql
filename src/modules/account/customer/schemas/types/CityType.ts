@@ -2,16 +2,16 @@ import 'reflect-metadata';
 
 import { Field, ObjectType } from 'type-graphql';
 
-import { Country } from './CountryType';
+import { CountryType } from './CountryType';
 
 @ObjectType()
-export class City {
+export class CityType {
   @Field()
   id: string;
 
   @Field()
   name: string;
 
-  @Field(() => Country)
-  country: Country;
+  @Field(() => CountryType)
+  country: CountryType;
 }
