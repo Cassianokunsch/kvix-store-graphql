@@ -1,7 +1,6 @@
 import { getRepository, Repository } from 'typeorm';
 
-import { Address } from '../entities/Address';
-import { Customer } from '../entities/Customer';
+import { Address, Customer } from '../entities';
 
 export class CustomerService {
   private _customerRepository: Repository<Customer> = getRepository(Customer);

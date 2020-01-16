@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Arg } from 'type-graphql';
 import { getRepository } from 'typeorm';
 
-import { Brand } from '../schemas/types/BrandType';
+import { Brand } from '../schemas/types';
 
 @Resolver(Brand)
 export class BrandResolver {

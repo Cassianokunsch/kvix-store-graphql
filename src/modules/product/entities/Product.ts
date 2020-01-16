@@ -1,8 +1,7 @@
 import { CreateDateColumn, UpdateDateColumn, Column, PrimaryGeneratedColumn, Entity, ManyToOne, JoinColumn } from 'typeorm';
 
-import { Brand } from './Brand';
-import { Category } from './Category';
-
+import { Category } from './';
+import { Brand } from './';
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn('uuid')
@@ -17,13 +16,13 @@ export class Product {
   @Column({ type: 'decimal' })
   price: number;
 
-  @ManyToOne(() => Category)
-  @JoinColumn({ name: 'category_id' })
-  category: Category;
-
   @ManyToOne(() => Brand)
   @JoinColumn({ name: 'brand_id' })
   brand: Brand;
+
+  @ManyToOne(() => Category)
+  @JoinColumn({ name: 'category_id' })
+  category: Category;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'created_at' })
   createdAt: Date;

@@ -1,8 +1,8 @@
 import { Resolver, Query, Arg, Mutation } from 'type-graphql';
 import { getRepository } from 'typeorm';
 
-import { CreateProductInput } from '../schemas/inputs/ProductInputs';
-import { Product } from '../schemas/types/ProductType';
+import { CreateProductInput } from '../schemas/inputs';
+import { Product } from '../schemas/types';
 
 @Resolver(Product)
 export class ProductResolver {

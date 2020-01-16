@@ -1,9 +1,8 @@
 import { Resolver, Mutation, Arg } from 'type-graphql';
 
-import { LoginInput } from '../schemas/inputs/LoginInput';
-import { SignUpInput } from '../schemas/inputs/SignInInput';
-import { Payload } from '../schemas/types/PayloadType';
-import { AuthService } from '../services/AuthService';
+import { LoginInput, SignUpInput } from '../schemas/inputs';
+import { Payload } from '../schemas/types';
+import { AuthService } from '../services';
 
 @Resolver()
 export class AuthResolver {

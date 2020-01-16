@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 import { CommonCollumns } from '../../../helpers/CommonCollumns';
-import { Country } from './Country';
+import { Country } from './';
 
 @Entity()
 export class City extends CommonCollumns {

@@ -3,7 +3,7 @@ import { Resolver, Query, Mutation, Arg } from 'type-graphql';
 import { getRepository } from 'typeorm';
 
 import { Upload } from '../schemas/interfaces/UploadInterface';
-import { Category } from '../schemas/types/CategoryType';
+import { Category } from '../schemas/types';
 import { ImageResolver } from './ImageResolver';
 
 @Resolver(Category)

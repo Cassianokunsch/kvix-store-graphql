@@ -2,7 +2,7 @@ import { buildSchemaSync } from 'type-graphql';
 
 import { GraphQLModule } from '@graphql-modules/core';
 
-import { AuthResolver } from './resolvers/AuthResolver';
+import { AuthResolver } from './resolvers';
 import { getCurrentUser } from './Util';
 
 export const AuthModule = new GraphQLModule({

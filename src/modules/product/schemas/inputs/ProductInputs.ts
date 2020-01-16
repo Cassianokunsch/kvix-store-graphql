@@ -1,6 +1,6 @@
 import { InputType, Field } from 'type-graphql';
 
-import { Product } from '../../entities/Product';
+import { Product } from '../../entities';
 
 @InputType()
 export class CreateProductInput implements Partial<Product> {

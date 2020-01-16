@@ -1,12 +1,12 @@
 import 'reflect-metadata';
 import { Resolver, Mutation, Arg, Query } from 'type-graphql';
 
-import { CreateCountryInput } from '../schemas/inputs/CountryInputs';
-import { CountryType } from '../schemas/types/CountryType';
-import { CountryService } from '../services/CountryService';
+import { CreateCountryInput } from '../schemas/inputs';
+import { CountryType } from '../schemas/types';
+import { CountryService } from '../services';
 
 @Resolver(CountryType)
-class CountryTypeResolver {
+export class CountryResolver {
   private _countryService: CountryService = new CountryService();
 
   @Mutation(() => CountryType)
@@ -19,5 +19,3 @@ class CountryTypeResolver {
     return await this._countryService.getAllCountries();
   }
 }
-
-export default CountryTypeResolver;

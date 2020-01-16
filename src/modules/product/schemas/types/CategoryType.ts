@@ -1,6 +1,6 @@
 import { Field, ObjectType } from 'type-graphql';
 
-import { Image } from './ImageType';
+import { Image } from './';
 
 @ObjectType()
 export class Category {

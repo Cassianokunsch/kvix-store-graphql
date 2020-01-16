@@ -4,8 +4,8 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
 import { errorName } from '../../helpers/Errors';
-import { User } from '../entities/User';
-import { Payload } from '../schemas/types/PayloadType';
+import { User } from '../entities';
+import { Payload } from '../schemas/types';
 
 export class AuthService {
   private _userRepository: Repository<User> = getRepository(User);

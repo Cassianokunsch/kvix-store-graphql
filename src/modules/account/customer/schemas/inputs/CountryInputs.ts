@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { InputType, Field } from 'type-graphql';
 
-import { CountryType } from '../types/CountryType';
+import { CountryType } from '../types';
 
 @InputType()
 export class CreateCountryInput implements Partial<CountryType> {
