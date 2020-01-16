@@ -3,47 +3,34 @@ import { Repository, getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
-import { Customer } from '../../account/customer/entities/Customer';
 import { errorName } from '../../helpers/Errors';
-import { SignUpInput } from '../schemas/inputs/SignInInput';
+import { User } from '../entities/User';
 import { Payload } from '../schemas/types/PayloadType';
 
 export class AuthService {
-  private _customerRepository: Repository<Customer> = getRepository(Customer);
+  private _userRepository: Repository<User> = getRepository(User);
 
   async login(email: string, password: string): Promise<Payload> {
-    const customer = await this._customerRepository.findOne({ where: { email } });
-    if (!customer) throw new Error(errorName.INVALID_CREDENTIALS);
+    const user = await this._userRepository.findOne({ where: { email } });
+    if (!user) throw new Error(errorName.INVALID_CREDENTIALS);
 
-    const valid = await compare(password, customer.password);
+    const valid = await compare(password, user.password);
     if (!valid) throw new Error(errorName.INVALID_CREDENTIALS);
 
     if (!process.env.APP_SECRET) throw Error('Erro to get APP_SECRET');
 
-    return { token: sign({ id: customer.id, role: 'SOME RULES' }, process.env.APP_SECRET) };
+    return { token: sign({ id: user.id, role: 'SOME RULES' }, process.env.APP_SECRET) };
   }
 
-  async signUp(signUpInput: SignUpInput): Promise<Payload> {
-    const { email, password, name, cpf, cellPhone, gender } = signUpInput;
+  async signUp(email: string, name: string, password: string): Promise<Payload> {
+    const query = await this._userRepository.findOne({ where: { email } });
+    if (query) throw new Error(errorName.EMAIL_ALREADY_USE);
 
-    const queryResult = await this._customerRepository
-      .createQueryBuilder('customer')
-      .where('customer.cpf = :cpf OR customer.cell_phone = :cellPhone OR customer.email = :email', { cpf, cellPhone, email })
-      .getOne();
-
-    if (queryResult) {
-      if (queryResult.cpf == cpf) throw Error('CPF is already in use!');
-
-      if (queryResult.cellPhone == cellPhone) throw Error('Cellphone is already in use!');
-
-      if (queryResult.email == email) throw new Error(errorName.EMAIL_ALREADY_USE);
-    }
-
-    const customerToCreate = this._customerRepository.create({ email, password, name, cpf, cellPhone, gender });
-    const customer = await this._customerRepository.save(customerToCreate);
+    const userToCreate = this._userRepository.create({ email, password, name });
+    const user = await this._userRepository.save(userToCreate);
 
     if (!process.env.APP_SECRET) throw Error('Erro to get APP_SECRET');
 
-    return { token: sign({ id: customer.id, role: 'SOME RULES' }, process.env.APP_SECRET) };
+    return { token: sign({ id: user.id, role: 'SOME RULES' }, process.env.APP_SECRET) };
   }
 }
