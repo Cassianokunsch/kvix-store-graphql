@@ -2,10 +2,10 @@ import { InputType, Field } from 'type-graphql';
 
 import { MinLength, IsEmail } from 'class-validator';
 
-import { Gender, Customer } from '../../../account/customer/entities/Customer';
+import { UserType } from '../types/UserType';
 
 @InputType()
-export class SignUpInput implements Partial<Customer> {
+export class SignUpInput implements Partial<UserType> {
   @Field()
   @IsEmail()
   email: string;
@@ -16,13 +16,4 @@ export class SignUpInput implements Partial<Customer> {
 
   @Field()
   name: string;
-
-  @Field()
-  cpf: string;
-
-  @Field()
-  cellPhone: string;
-
-  @Field()
-  gender: Gender;
 }
