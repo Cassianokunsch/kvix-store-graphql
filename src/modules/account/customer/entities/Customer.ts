@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { Column, Entity, OneToMany } from 'typeorm';
 
 import { CommonCollumns } from '../../../helpers/CommonCollumns';
-import { Address } from './Address';
+import { Address } from './';
 
 //export type Gender = 'MALE' | 'FEMALE';
 

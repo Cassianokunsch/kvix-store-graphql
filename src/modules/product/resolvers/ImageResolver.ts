@@ -4,7 +4,7 @@ import { createWriteStream } from 'fs';
 import { Stream } from 'stream';
 
 import { Upload } from '../schemas/interfaces/UploadInterface';
-import { Image } from '../schemas/types/ImageType';
+import { Image } from '../schemas/types';
 
 const uploadDir = __dirname + '/../../../uploads/';
 

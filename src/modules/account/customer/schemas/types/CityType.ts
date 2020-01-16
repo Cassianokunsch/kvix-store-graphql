@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { Field, ObjectType } from 'type-graphql';
 
-import { CountryType } from './CountryType';
+import { CountryType } from './';
 
 @ObjectType()
 export class CityType {

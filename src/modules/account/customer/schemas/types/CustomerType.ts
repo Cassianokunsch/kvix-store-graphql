@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { Field, ObjectType } from 'type-graphql';
 
-import { AddressType } from './AddressType';
+import { AddressType } from './';
 
 export type Gender = 'MALE' | 'FEMALE';
 @ObjectType()

@@ -1,13 +1,12 @@
 import 'reflect-metadata';
 import { Resolver, Mutation, Arg, Query, FieldResolver, Root } from 'type-graphql';
 
-import { CreateCityInput } from '../schemas/inputs/CityInputs';
-import { CityType } from '../schemas/types/CityType';
-import { CountryType } from '../schemas/types/CountryType';
-import { CityService } from '../services/CityService';
+import { CreateCityInput } from '../schemas/inputs';
+import { CityType, CountryType } from '../schemas/types';
+import { CityService } from '../services';
 
 @Resolver(CityType)
-class CityResolver {
+export class CityResolver {
   private _cityService: CityService = new CityService();
 
   @Mutation(() => CityType)
@@ -25,5 +24,3 @@ class CityResolver {
     return this._cityService.getFieldResolverCountry(cityType.id);
   }
 }
-
-export default CityResolver;

@@ -1,13 +1,12 @@
 import 'reflect-metadata';
 import { Resolver, Mutation, Arg, Query, FieldResolver, Root } from 'type-graphql';
 
-import { CreateCustomerInput } from '../schemas/inputs/CustomerInputs';
-import { AddressType } from '../schemas/types/AddressType';
-import { CustomerType } from '../schemas/types/CustomerType';
-import { CustomerService } from '../services/CustomerService';
+import { CreateCustomerInput } from '../schemas/inputs';
+import { AddressType, CustomerType } from '../schemas/types';
+import { CustomerService } from '../services';
 
 @Resolver(CustomerType)
-class CustomerResolver {
+export class CustomerResolver {
   private _customerService: CustomerService = new CustomerService();
 
   @Mutation(() => CustomerType)
@@ -25,5 +24,3 @@ class CustomerResolver {
     return await this._customerService.getFieldResolverAddress(id);
   }
 }
-
-export default CustomerResolver;

@@ -1,7 +1,6 @@
 import { Repository, getRepository } from 'typeorm';
 
-import { City } from '../entities/City';
-import { Country } from '../entities/Country';
+import { City, Country } from '../entities';
 
 export class CityService {
   private _cityRepository: Repository<City> = getRepository(City);

@@ -1,6 +1,6 @@
 import { CreateDateColumn, UpdateDateColumn, Column, PrimaryGeneratedColumn, Entity, ManyToOne, JoinColumn } from 'typeorm';
 
-import { Image } from './Image';
+import { Image } from './';
 
 @Entity()
 export class Category {

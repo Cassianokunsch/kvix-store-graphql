@@ -2,8 +2,7 @@ import 'reflect-metadata';
 
 import { ObjectType, Field } from 'type-graphql';
 
-import { CityType } from './CityType';
-import { CustomerType } from './CustomerType';
+import { CityType, CustomerType } from './';
 
 @ObjectType()
 export class AddressType {

@@ -2,13 +2,12 @@ import 'reflect-metadata';
 import { Resolver, Query, Mutation, Arg, Ctx, FieldResolver, Root } from 'type-graphql';
 
 import { Context } from '../../../helpers/Context';
-import { CreateAddressInput } from '../schemas/inputs/AddressInputs';
-import { AddressType } from '../schemas/types/AddressType';
-import { CityType } from '../schemas/types/CityType';
-import { AddressService } from '../services/AddressService';
+import { CreateAddressInput } from '../schemas/inputs';
+import { AddressType, CityType } from '../schemas/types';
+import { AddressService } from '../services';
 
 @Resolver(AddressType)
-class AddressResolver {
+export class AddressResolver {
   private _addressService: AddressService = new AddressService();
 
   @Query(() => [AddressType], { nullable: true })
@@ -27,5 +26,3 @@ class AddressResolver {
     return this._addressService.getFieldResolverCity(address.id);
   }
 }
-
-export default AddressResolver;
