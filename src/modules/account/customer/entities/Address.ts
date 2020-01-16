@@ -1,16 +1,13 @@
 import 'reflect-metadata';
 
-import { Entity, Column, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 
 import { CommonCollumns } from '../../../helpers/CommonCollumns';
 import { City } from './City';
 import { Customer } from './Customer';
 
 @Entity()
-export class Address {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Address extends CommonCollumns {
   @Column({ type: 'varchar', length: 256 })
   street: string;
 
@@ -33,7 +30,4 @@ export class Address {
   @ManyToOne(() => City, { nullable: false })
   @JoinColumn({ name: 'city_id' })
   city: City;
-
-  @Column(() => CommonCollumns)
-  commonCollumns: CommonCollumns;
 }
