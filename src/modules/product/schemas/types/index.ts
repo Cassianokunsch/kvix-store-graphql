@@ -1,4 +1,4 @@
-export * from './BrandType';
-export * from './CategoryType';
-export * from './ImageType';
-export * from './ProductType';
+export { Brand } from './BrandType';
+export { Category } from './CategoryType';
+export { Image } from './ImageType';
+export { Product } from './ProductType';

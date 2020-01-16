@@ -4,7 +4,7 @@ import { getRepository } from 'typeorm';
 
 import { Upload } from '../schemas/interfaces/UploadInterface';
 import { Category } from '../schemas/types';
-import { ImageResolver } from './ImageResolver';
+import { ImageResolver } from './';
 
 @Resolver(Category)
 export class CategoryResolver {

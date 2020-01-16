@@ -1,4 +1,4 @@
-export * from './Address';
-export * from './City';
-export * from './Country';
-export * from './Customer';
+export { Address } from './Address';
+export { City } from './City';
+export { Country } from './Country';
+export { Customer } from './Customer';

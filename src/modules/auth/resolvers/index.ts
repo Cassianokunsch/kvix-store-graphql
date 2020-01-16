@@ -1,1 +1,1 @@
-export * from './AuthResolver';
+export { AuthResolver } from './AuthResolver';

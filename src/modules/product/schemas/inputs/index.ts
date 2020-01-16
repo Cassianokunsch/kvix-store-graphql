@@ -1,2 +1,2 @@
-export * from './CategoryInputs';
-export * from './ProductInputs';
+export { CreateCategoryInput } from './CategoryInputs';
+export { CreateProductInput } from './ProductInputs';

@@ -1,7 +1,6 @@
 import { Field, ObjectType } from 'type-graphql';
 
-import { Brand } from './';
-import { Category } from './';
+import { Brand, Category } from './';
 
 @ObjectType()
 export class Product {

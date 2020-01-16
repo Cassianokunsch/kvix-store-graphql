@@ -1,7 +1,6 @@
 import { CreateDateColumn, UpdateDateColumn, Column, PrimaryGeneratedColumn, Entity, ManyToOne, JoinColumn } from 'typeorm';
 
-import { Category } from './';
-import { Brand } from './';
+import { Category, Brand } from './';
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn('uuid')

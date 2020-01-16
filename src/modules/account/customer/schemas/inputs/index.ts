@@ -1,4 +1,4 @@
-export * from './AddressInputs';
-export * from './CityInputs';
-export * from './CountryInputs';
-export * from './CustomerInputs';
+export { CreateAddressInput } from './AddressInputs';
+export { CreateCityInput } from './CityInputs';
+export { CreateCountryInput } from './CountryInputs';
+export { CreateCustomerInput } from './CustomerInputs';

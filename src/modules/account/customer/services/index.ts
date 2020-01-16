@@ -1,4 +1,4 @@
-export * from './AddressService';
-export * from './CityService';
-export * from './CountryService';
-export * from './CustomerService';
+export { AddressService } from './AddressService';
+export { CityService } from './CityService';
+export { CountryService } from './CountryService';
+export { CustomerService } from './CustomerService';

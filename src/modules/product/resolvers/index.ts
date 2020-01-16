@@ -1,4 +1,4 @@
-export * from './BrandResolver';
-export * from './CategoryResolver';
-export * from './ImageResolver';
-export * from './ProductResolver';
+export { BrandResolver } from './BrandResolver';
+export { CategoryResolver } from './CategoryResolver';
+export { ImageResolver } from './ImageResolver';
+export { ProductResolver } from './ProductResolver';
