@@ -22,7 +22,7 @@ export class AddressType {
   number: string;
 
   @Field()
-  complement?: string;
+  complement: string;
 
   customer: CustomerType;
 

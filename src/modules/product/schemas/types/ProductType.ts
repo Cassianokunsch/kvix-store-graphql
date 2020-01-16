@@ -1,9 +1,9 @@
 import { Field, ObjectType } from 'type-graphql';
 
-import { Brand, Category } from './';
+import { BrandType, CategoryType } from './';
 
 @ObjectType()
-export class Product {
+export class ProductType {
   @Field()
   id: string;
 
@@ -16,9 +16,9 @@ export class Product {
   @Field()
   price: number;
 
-  @Field(() => Category)
-  category: Category;
+  @Field(() => CategoryType)
+  category: CategoryType;
 
-  @Field(() => Brand)
-  brand: Brand;
+  @Field(() => BrandType)
+  brand: BrandType;
 }

@@ -1,7 +1,7 @@
 import { Field, ObjectType } from 'type-graphql';
 
 @ObjectType()
-export class Image {
+export class ImageType {
   @Field()
   id: string;
 

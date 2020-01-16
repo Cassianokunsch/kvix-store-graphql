@@ -1,15 +1,15 @@
 import { Field, ObjectType } from 'type-graphql';
 
-import { Image } from './';
+import { ImageType } from './';
 
 @ObjectType()
-export class Category {
+export class CategoryType {
   @Field()
   id: string;
 
   @Field()
   name: string;
 
-  @Field(() => Image)
-  image: Image;
+  @Field(() => ImageType)
+  image: ImageType;
 }

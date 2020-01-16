@@ -9,7 +9,7 @@ export class AddressService {
     return await this._addressRepository.find();
   }
 
-  async createAddress(cityId: string, neighborhood: string, number: string, street: string, customerId: string, complement?: string): Promise<Address> {
+  async createAddress(cityId: string, neighborhood: string, number: string, street: string, customerId: string, complement: string): Promise<Address> {
     const address = this._addressRepository.create({
       neighborhood,
       number,

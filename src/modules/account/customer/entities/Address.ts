@@ -20,7 +20,7 @@ export class Address extends CommonCollumns {
   number: string;
 
   @Column({ type: 'varchar', length: 256, nullable: true })
-  complement?: string;
+  complement: string;
 
   @ManyToOne(() => Customer, { nullable: false })
   @JoinColumn({ name: 'customer_id' })
