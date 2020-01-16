@@ -1,6 +1,9 @@
-import { CreateDateColumn, UpdateDateColumn, Column } from 'typeorm';
+import { CreateDateColumn, UpdateDateColumn, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-export class CommonCollumns {
+export abstract class CommonCollumns {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
   @CreateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'created_at' })
   createdAt: Date;
 
