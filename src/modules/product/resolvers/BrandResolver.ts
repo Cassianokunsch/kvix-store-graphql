@@ -1,18 +1,19 @@
 import { Resolver, Query, Mutation, Arg } from 'type-graphql';
-import { getRepository } from 'typeorm';
 
-import { Brand } from '../schemas/types';
+import { BrandType } from '../schemas/types';
+import { BrandService } from '../services';
 
-@Resolver(Brand)
+@Resolver(BrandType)
 export class BrandResolver {
-  @Query(() => [Brand], { nullable: true })
-  async brands(): Promise<Brand[]> {
-    return await getRepository(Brand).find();
+  private _brandService: BrandService = new BrandService();
+
+  @Query(() => [BrandType], { nullable: true })
+  async brands(): Promise<BrandType[]> {
+    return (await this._brandService.getAllBrands()) as BrandType[];
   }
 
-  @Mutation(() => Brand)
-  async createBrand(@Arg('name') name: string): Promise<Brand> {
-    const brandToCreate = getRepository(Brand).create({ name });
-    return await getRepository(Brand).save(brandToCreate);
+  @Mutation(() => BrandType, { nullable: true })
+  async createBrand(@Arg('name') name: string): Promise<BrandType> {
+    return (await this._brandService.createBrand(name)) as BrandType;
   }
 }
