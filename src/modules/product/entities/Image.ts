@@ -1,10 +1,9 @@
-import { Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Entity } from 'typeorm';
+import { Column, Entity } from 'typeorm';
+
+import { CommonCollumns } from '../../helpers/CommonCollumns';
 
 @Entity()
-export class Image {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Image extends CommonCollumns {
   @Column({ type: 'text' })
   filename: string;
 
@@ -16,13 +15,4 @@ export class Image {
 
   @Column({ type: 'text' })
   path: string;
-
-  @CreateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'updated_at' })
-  updatedAt: Date;
-
-  @Column({ type: 'boolean', default: () => false })
-  deleted: boolean;
 }
