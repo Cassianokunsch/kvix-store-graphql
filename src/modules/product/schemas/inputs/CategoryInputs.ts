@@ -1,9 +1,9 @@
 import { InputType, Field } from 'type-graphql';
 
-import { Category } from '../../entities';
+import { CategoryType } from '../types';
 
 @InputType()
-export class CreateCategoryInput implements Partial<Category> {
+export class CreateCategoryInput implements Partial<CategoryType> {
   @Field()
   name: string;
 }

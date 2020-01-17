@@ -1,6 +1,6 @@
 import { InputType, Field } from 'type-graphql';
 
-import { BrandType, CategoryType, ProductType } from '../types';
+import { ProductType } from '../types';
 
 @InputType()
 export class CreateProductInput implements Partial<ProductType> {
@@ -14,8 +14,8 @@ export class CreateProductInput implements Partial<ProductType> {
   price: number;
 
   @Field()
-  category: CategoryType;
+  categoryId: string;
 
   @Field()
-  brand: BrandType;
+  brandId: string;
 }
