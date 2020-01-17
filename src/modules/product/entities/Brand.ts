@@ -1,19 +1,9 @@
-import { CreateDateColumn, UpdateDateColumn, Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
+import { Column, Entity } from 'typeorm';
+
+import { CommonCollumns } from '../../helpers/CommonCollumns';
 
 @Entity()
-export class Brand {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Brand extends CommonCollumns {
   @Column({ type: 'varchar', length: 256 })
   name: string;
-
-  @CreateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'updated_at' })
-  updatedAt: Date;
-
-  @Column({ type: 'boolean', default: () => false })
-  deleted: boolean;
 }

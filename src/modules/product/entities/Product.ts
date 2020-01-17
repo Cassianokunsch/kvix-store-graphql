@@ -1,11 +1,9 @@
-import { CreateDateColumn, UpdateDateColumn, Column, PrimaryGeneratedColumn, Entity, ManyToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
 
+import { CommonCollumns } from '../../helpers/CommonCollumns';
 import { Category, Brand } from './';
 @Entity()
-export class Product {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Product extends CommonCollumns {
   @Column({ type: 'varchar', length: 256 })
   name: string;
 
@@ -22,13 +20,4 @@ export class Product {
   @ManyToOne(() => Category)
   @JoinColumn({ name: 'category_id' })
   category: Category;
-
-  @CreateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'updated_at' })
-  updatedAt: Date;
-
-  @Column({ type: 'boolean', default: () => false })
-  deleted: boolean;
 }

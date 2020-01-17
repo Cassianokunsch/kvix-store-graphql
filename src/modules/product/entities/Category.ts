@@ -1,25 +1,14 @@
-import { CreateDateColumn, UpdateDateColumn, Column, PrimaryGeneratedColumn, Entity, ManyToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
 
+import { CommonCollumns } from '../../helpers/CommonCollumns';
 import { Image } from './';
 
 @Entity()
-export class Category {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Category extends CommonCollumns {
   @Column({ type: 'varchar', length: 256 })
   name: string;
 
   @ManyToOne(() => Image)
   @JoinColumn({ name: 'image_id' })
   image: Image;
-
-  @CreateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'updated_at' })
-  updatedAt: Date;
-
-  @Column({ type: 'boolean', default: () => false })
-  deleted: boolean;
 }
