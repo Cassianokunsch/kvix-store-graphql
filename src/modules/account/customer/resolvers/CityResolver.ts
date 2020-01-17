@@ -9,18 +9,18 @@ import { CityService } from '../services';
 export class CityResolver {
   private _cityService: CityService = new CityService();
 
-  @Mutation(() => CityType)
-  async createCityType(@Arg('input') { name, countryId }: CreateCityInput): Promise<CityType> {
-    return await this._cityService.createCity(name, countryId);
+  @Mutation(() => CityType, { nullable: true })
+  async createCityType(@Arg('createCityInput') { name, countryId }: CreateCityInput): Promise<CityType> {
+    return (await this._cityService.createCity(name, countryId)) as CityType;
   }
 
   @Query(() => [CityType], { nullable: true })
   async cities(): Promise<CityType[]> {
-    return await this._cityService.getAllCities();
+    return (await this._cityService.getAllCities()) as CityType[];
   }
 
   @FieldResolver()
   async country(@Root() cityType: CityType): Promise<CountryType> {
-    return this._cityService.getFieldResolverCountry(cityType.id);
+    return (await this._cityService.getFieldResolverCountry(cityType.id)) as CountryType;
   }
 }

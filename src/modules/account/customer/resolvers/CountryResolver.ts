@@ -9,13 +9,13 @@ import { CountryService } from '../services';
 export class CountryResolver {
   private _countryService: CountryService = new CountryService();
 
-  @Mutation(() => CountryType)
-  async createCountry(@Arg('input') { abbr, name }: CreateCountryInput): Promise<CountryType> {
-    return await this._countryService.createCountry(abbr, name);
+  @Mutation(() => CountryType, { nullable: true })
+  async createCountry(@Arg('createCountryInput') { abbr, name }: CreateCountryInput): Promise<CountryType> {
+    return (await this._countryService.createCountry(abbr, name)) as CountryType;
   }
 
   @Query(() => [CountryType], { nullable: true })
   async countries(): Promise<CountryType[]> {
-    return await this._countryService.getAllCountries();
+    return (await this._countryService.getAllCountries()) as CountryType[];
   }
 }

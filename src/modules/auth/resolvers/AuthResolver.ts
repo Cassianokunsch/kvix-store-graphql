@@ -10,11 +10,11 @@ export class AuthResolver {
 
   @Mutation(() => Payload)
   async login(@Arg('authInput') { email, password }: LoginInput): Promise<Payload> {
-    return this._authService.login(email, password);
+    return await this._authService.login(email, password);
   }
 
   @Mutation(() => Payload)
   async signUp(@Arg('signUpInput') { email, name, password }: SignUpInput): Promise<Payload> {
-    return this._authService.signUp(email, name, password);
+    return await this._authService.signUp(email, name, password);
   }
 }

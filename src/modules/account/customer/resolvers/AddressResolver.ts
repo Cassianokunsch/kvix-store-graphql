@@ -12,17 +12,17 @@ export class AddressResolver {
 
   @Query(() => [AddressType], { nullable: true })
   async addresses(): Promise<AddressType[]> {
-    return await this._addressService.getAllAddresses();
+    return (await this._addressService.getAllAddresses()) as AddressType[];
   }
 
-  @Mutation(() => AddressType)
-  async createAddress(@Arg('input') createAddressInput: CreateAddressInput, @Ctx() { currentUser }: Context): Promise<AddressType> {
+  @Mutation(() => AddressType, { nullable: true })
+  async createAddress(@Arg('createAddressInput') createAddressInput: CreateAddressInput, @Ctx() { currentUser }: Context): Promise<AddressType> {
     const { cityId, neighborhood, number, street, complement } = createAddressInput;
-    return await this._addressService.createAddress(cityId, neighborhood, number, street, currentUser.id, complement);
+    return (await this._addressService.createAddress(cityId, neighborhood, number, street, currentUser.id, complement)) as AddressType;
   }
 
   @FieldResolver()
   async city(@Root() address: AddressType): Promise<CityType> {
-    return this._addressService.getFieldResolverCity(address.id);
+    return (await this._addressService.getFieldResolverCity(address.id)) as CityType;
   }
 }

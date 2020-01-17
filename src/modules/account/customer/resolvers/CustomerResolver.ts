@@ -9,18 +9,18 @@ import { CustomerService } from '../services';
 export class CustomerResolver {
   private _customerService: CustomerService = new CustomerService();
 
-  @Mutation(() => CustomerType)
-  async createCustomer(@Arg('input') { cellPhone, cpf, gender }: CreateCustomerInput): Promise<CustomerType> {
-    return await this._customerService.createCustomer(cellPhone, cpf, gender);
+  @Mutation(() => CustomerType, { nullable: true })
+  async createCustomer(@Arg('createCustomerInput') { cellPhone, cpf, gender }: CreateCustomerInput): Promise<CustomerType> {
+    return (await this._customerService.createCustomer(cellPhone, cpf, gender)) as CustomerType;
   }
 
   @Query(() => [CustomerType], { nullable: true })
   async customers(): Promise<CustomerType[]> {
-    return await this._customerService.getAllCustomers();
+    return (await this._customerService.getAllCustomers()) as CustomerType[];
   }
 
   @FieldResolver()
   async addresses(@Root() { id }: CustomerType): Promise<AddressType[]> {
-    return await this._customerService.getFieldResolverAddress(id);
+    return (await this._customerService.getFieldResolverAddress(id)) as AddressType[];
   }
 }
