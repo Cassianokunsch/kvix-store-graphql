@@ -1,26 +1,9 @@
-import { Field, ObjectType } from 'type-graphql';
-import { CreateDateColumn, UpdateDateColumn, Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
-@ObjectType()
+import { CommonCollumns } from '../../helpers/CommonCollumns';
+
 @Entity()
-export class Brand {
-  @Field()
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @Field()
+export class Brand extends CommonCollumns {
   @Column({ type: 'varchar', length: 256 })
   name: string;
-
-  @Field()
-  @CreateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'created_at' })
-  createdAt: Date;
-
-  @Field()
-  @UpdateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'updated_at' })
-  updatedAt: Date;
-
-  @Field()
-  @Column({ type: 'boolean', default: () => false })
-  deleted: boolean;
 }

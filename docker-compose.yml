@@ -21,7 +21,7 @@ services:
       TYPEORM_DATABASE: postgres
       TYPEORM_PORT: 5432
       TYPEORM_SYNCHRONIZE: 'true'
-      TYPEORM_ENTITIES: src/modules/**/entities/*.ts
+      TYPEORM_ENTITIES: src/modules/**/entities/index.ts
     depends_on:
       - kvix-db
   kvix-db:
