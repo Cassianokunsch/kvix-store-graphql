@@ -11,7 +11,7 @@ export class AuthService {
   private _userRepository: Repository<User> = getRepository(User);
 
   async login(email: string, password: string): Promise<Payload> {
-    const user = await this._userRepository.findOne({ where: { email } });
+    const user = await this._userRepository.findOne({ email });
     if (!user) throw new Error(errorName.INVALID_CREDENTIALS);
 
     const valid = await compare(password, user.password);
@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   async signUp(email: string, name: string, password: string): Promise<Payload> {
-    const query = await this._userRepository.findOne({ where: { email } });
+    const query = await this._userRepository.findOne({ email });
     if (query) throw new Error(errorName.EMAIL_ALREADY_USE);
 
     const userToCreate = this._userRepository.create({ email, password, name });
