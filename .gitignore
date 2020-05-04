@@ -107,3 +107,24 @@ public/
 .history
 
 # End of https://www.gitignore.io/api/node,visualstudiocode
+
+# dependencies
+/node_modules
+
+# IDE
+/.idea
+/.awcache
+/.vscode
+
+# misc
+npm-debug.log
+
+# example
+/quick-start
+
+# tests
+/coverage
+/.nyc_output
+
+# dist
+/dist

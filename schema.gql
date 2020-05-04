@@ -1,0 +1,41 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Brand {
+  id: String!
+  name: String!
+}
+
+type Image {
+  id: String!
+  filename: String!
+  mimetype: String!
+  encoding: String!
+  path: String!
+}
+
+type Category {
+  id: String!
+  name: String!
+  image: Image!
+}
+
+type Product {
+  id: String!
+  name: String!
+  description: String!
+  price: Float!
+  brand: Brand!
+  category: Category!
+}
+
+type Query {
+  brands: [Brand!]
+  categories: [Category!]
+  products: [Product!]
+}
+
+type Mutation {
+  createBrand(name: String!): Brand
+}
