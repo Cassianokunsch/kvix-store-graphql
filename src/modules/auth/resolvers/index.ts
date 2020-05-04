@@ -1,1 +1,0 @@
-export { AuthResolver } from './AuthResolver';
