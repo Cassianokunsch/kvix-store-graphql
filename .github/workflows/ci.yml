@@ -49,8 +49,11 @@ jobs:
     name: SonarCloud Trigger
     runs-on: ubuntu-latest
     steps:
-      - name: Clone Repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn install -D typescript
       - name: Download code coverage results
         uses: actions/download-artifact@v1
         with:
