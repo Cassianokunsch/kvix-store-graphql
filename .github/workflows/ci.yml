@@ -8,9 +8,7 @@ on:
   push:
     branches:
       - develop
-      - 'feature/*'
-      - 'bugfix/*'
-      - 'release/*'
+      - master
   pull_request:
     branches:
       - master
