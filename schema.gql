@@ -3,39 +3,52 @@
 # ------------------------------------------------------
 
 type Brand {
-  id: String!
+  id: ID!
   name: String!
-}
-
-type Image {
-  id: String!
-  filename: String!
-  mimetype: String!
-  encoding: String!
-  path: String!
+  imageUrl: String!
 }
 
 type Category {
-  id: String!
+  id: ID!
   name: String!
-  image: Image!
+  imageUrl: String!
+}
+
+type ProductImages {
+  id: ID!
+  path: String!
 }
 
 type Product {
-  id: String!
+  id: ID!
   name: String!
   description: String!
   price: Float!
   brand: Brand!
   category: Category!
+  images: ProductImages!
 }
 
 type Query {
-  brands: [Brand!]
-  categories: [Category!]
-  products: [Product!]
+  products: [Product!]!
+  brands: [Brand!]!
+  categories: [Category!]!
 }
 
 type Mutation {
-  createBrand(name: String!): Brand
+  createProduct(create: CreateProduct!): Product!
+  createBrand(name: String!, image: Upload!): Brand!
+  createCategory(name: String!, file: Upload!): Category!
 }
+
+input CreateProduct {
+  name: String!
+  description: String!
+  price: Float!
+  brandId: ID!
+  categoryId: ID!
+  image: [Upload!]!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload

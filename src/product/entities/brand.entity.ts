@@ -1,12 +1,15 @@
 import { Column, Entity } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
-
-import { AbstractEntity } from '../../../common/abstract.entity';
+import { AbstractEntity } from '../../common/abstract.entity';
 
 @Entity()
 @ObjectType()
 export class Brand extends AbstractEntity {
   @Field()
-  @Column({ type: 'varchar', length: 256 })
+  @Column('varchar', { length: 256 })
   name: string;
+
+  @Field()
+  @Column('text')
+  imageUrl: string;
 }

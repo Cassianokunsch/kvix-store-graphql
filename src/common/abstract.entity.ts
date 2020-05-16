@@ -1,10 +1,10 @@
 import { Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType, ID } from '@nestjs/graphql';
 
 @ObjectType()
 export abstract class AbstractEntity {
-  @Field()
+  @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -14,6 +14,6 @@ export abstract class AbstractEntity {
   @UpdateDateColumn({ type: 'timestamp', default: () => 'LOCALTIMESTAMP', name: 'updated_at' })
   updatedAt: Date;
 
-  @Column({ type: 'boolean', default: () => false })
+  @Column('boolean', { default: () => false })
   deleted: boolean;
 }

@@ -1,18 +1,19 @@
-import { Brand } from './data/entities/brand.entity';
-import { BrandResolver } from './resolvers/brand.resolver';
-import { BrandService } from './services/brand.service';
-import { Category } from './data/entities/category.entity';
-import { CategoryResolver } from './resolvers/category.resolver';
-import { CategoryService } from './services/category.service';
-import { Module } from '@nestjs/common';
-import { Product } from './data/entities/product.entity';
-import { ProductResolver } from '../product/resolvers/product.resolver';
-import { ProductService } from './services/product.service';
+import { Product } from './entities/product.entity';
+import { Brand } from './entities/brand.entity';
+import { Category } from './entities/category.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Image } from './data/entities/image.entity';
+import { Module } from '@nestjs/common';
+import { ProductResolver } from './resolvers/product/product.resolver';
+
+import { BrandResolver } from './resolvers/brand/brand.resolver';
+
+import { ImageService } from './services/image/image.service';
+
+import { ProductImages } from './entities/productImages.entity';
+import { CategoryResolver } from './resolvers/category/category.resolver';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Product, Brand, Category, Image])],
-  providers: [ProductResolver, ProductService, BrandResolver, BrandService, CategoryService, CategoryResolver],
+  imports: [TypeOrmModule.forFeature([Product, Brand, Category, ProductImages])],
+  providers: [ProductResolver, BrandResolver, ImageService, CategoryResolver],
 })
 export class ProductModule {}

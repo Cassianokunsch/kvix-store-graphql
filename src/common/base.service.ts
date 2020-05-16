@@ -10,8 +10,4 @@ export abstract class BaseService<T> {
   async findById(id: string): Promise<T> {
     return await this.genericRepository.findOne(id);
   }
-
-  async create(entity: DeepPartial<T>): Promise<T> {
-    return await this.genericRepository.save(entity);
-  }
 }
