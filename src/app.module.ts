@@ -19,6 +19,7 @@ import database from './config/database';
     ProductModule,
     GraphQLModule.forRoot({
       autoSchemaFile: join(__dirname, '../schema.gql'),
+      introspection: Boolean(process.env.GRAPHQL_INSTROSPECTION),
     }),
   ],
 })

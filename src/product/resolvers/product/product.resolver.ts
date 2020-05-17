@@ -2,7 +2,7 @@ import { Query, Resolver, Mutation, Args } from '@nestjs/graphql';
 import { Product } from '../../entities/product.entity';
 
 import { CreateProduct } from '../../dtos/product.input';
-import { ImageService } from '../../services/image/image.service';
+import { ImageService } from '../../services/image.service';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 

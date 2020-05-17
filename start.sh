@@ -1,5 +1,5 @@
 if [ $NODE_ENV == "development" ]; then
-    yarn start:watch
+    yarn start:dev
 else
-    yarn start
+    yarn start:prod
 fi

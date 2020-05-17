@@ -3,7 +3,7 @@ import { Query, Resolver, Mutation, Args } from '@nestjs/graphql';
 import { Category } from '../../entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ImageService } from '../../services/image/image.service';
+import { ImageService } from '../../services/image.service';
 import { FileUpload } from '../../utils';
 import { GraphQLUpload } from 'apollo-server-fastify';
 

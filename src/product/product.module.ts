@@ -7,7 +7,7 @@ import { ProductResolver } from './resolvers/product/product.resolver';
 
 import { BrandResolver } from './resolvers/brand/brand.resolver';
 
-import { ImageService } from './services/image/image.service';
+import { ImageService } from './services/image.service';
 
 import { ProductImages } from './entities/productImages.entity';
 import { CategoryResolver } from './resolvers/category/category.resolver';

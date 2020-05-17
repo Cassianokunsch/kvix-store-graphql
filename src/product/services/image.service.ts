@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Stream } from 'stream';
 import { createWriteStream } from 'fs';
-import { ImageStored, FileUpload } from '../../utils';
+import { ImageStored, FileUpload } from '../utils';
 
 @Injectable()
 export class ImageService {

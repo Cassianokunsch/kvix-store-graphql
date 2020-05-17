@@ -2,7 +2,7 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { Brand } from '../../entities/brand.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ImageService } from '../../services/image/image.service';
+import { ImageService } from '../../services/image.service';
 import { CreateBrand } from '../../dtos/brand.input';
 
 @Resolver(Brand)
