@@ -38,7 +38,7 @@ type Query {
 type Mutation {
   createProduct(create: CreateProduct!): Product!
   createBrand(name: String!, image: Upload!): Brand!
-  createCategory(name: String!, file: Upload!): Category!
+  createCategory(name: String!, image: Upload!): Category!
 }
 
 input CreateProduct {
@@ -47,7 +47,7 @@ input CreateProduct {
   price: Float!
   brandId: ID!
   categoryId: ID!
-  image: [Upload!]!
+  image: Upload!
 }
 
 """The `Upload` scalar type represents a file upload."""

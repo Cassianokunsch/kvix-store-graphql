@@ -21,7 +21,6 @@ services:
       TYPEORM_SYNCHRONIZE: $TYPEORM_SYNCHRONIZE
       TYPEORM_LOGGING: $TYPEORM_LOGGING
       TYPEORM_ENTITIES: $TYPEORM_ENTITIES
-
     depends_on:
       - kvix-db
   kvix-db:
@@ -34,3 +33,17 @@ services:
       POSTGRES_DB: $TYPEORM_DATABASE
       POSTGRES_USER: $TYPEORM_USERNAME
       POSTGRES_PASSWORD: $TYPEORM_PASSWORD
+  kvix-pgadmin:
+    image: dpage/pgadmin4
+    container_name: kvix-pgadmin
+    restart: always
+    depends_on:
+      - kvix-db
+    ports:
+      - '80:80'
+    volumes:
+      - /var/lib/pgadmin
+      - /pgadmin4
+    environment:
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: admin

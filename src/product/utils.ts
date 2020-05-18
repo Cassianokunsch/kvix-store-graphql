@@ -10,4 +10,6 @@ export interface FileUpload {
 export interface ImageStored {
   filename: string;
   path: string;
+  mimetype: string;
+  encoding: string;
 }

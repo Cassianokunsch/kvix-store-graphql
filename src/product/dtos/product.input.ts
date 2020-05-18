@@ -20,6 +20,6 @@ export class CreateProduct {
   @Field(() => ID)
   categoryId: string;
 
-  @Field(() => [GraphQLUpload])
-  image: FileUpload;
+  @Field(() => GraphQLUpload)
+  image: Promise<FileUpload>;
 }

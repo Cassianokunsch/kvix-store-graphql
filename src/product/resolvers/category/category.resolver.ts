@@ -21,8 +21,8 @@ export class CategoryResolver {
   }
 
   @Mutation(() => Category)
-  async createCategory(@Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload, @Args('name') name: string): Promise<Category> {
-    const { path } = await this.imageService.processUpload(null);
+  async createCategory(@Args({ name: 'image', type: () => GraphQLUpload }) image: FileUpload, @Args('name') name: string): Promise<Category> {
+    const { path } = await this.imageService.processUpload(image);
     return await this.repository.save({
       name,
       imageUrl: path,
