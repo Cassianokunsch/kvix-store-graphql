@@ -128,4 +128,4 @@ npm-debug.log
 
 # dist
 /dist
-src/uploads/*
+src/product/uploads/*
