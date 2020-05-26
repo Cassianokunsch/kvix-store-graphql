@@ -6,21 +6,20 @@ services:
     build: .
     image: cassianokunsch/kvix-store-server
     volumes:
-      - './:/app'
+      - './:/release'
     ports:
       - '3000:3000'
     environment:
       APP_SECRET: $APP_SECRET
       NODE_ENV: $NODE_ENV
-      TYPEORM_CONNECTION: $TYPEORM_CONNECTION
-      TYPEORM_HOST: $TYPEORM_HOST
-      TYPEORM_USERNAME: $TYPEORM_USERNAME
-      TYPEORM_PASSWORD: $TYPEORM_PASSWORD
-      TYPEORM_DATABASE: $TYPEORM_DATABASE
-      TYPEORM_PORT: $TYPEORM_PORT
-      TYPEORM_SYNCHRONIZE: $TYPEORM_SYNCHRONIZE
-      TYPEORM_LOGGING: $TYPEORM_LOGGING
-      TYPEORM_ENTITIES: $TYPEORM_ENTITIES
+      DIALECT: $DIALECT
+      HOST: $HOST
+      USERNAME: $USERNAME
+      PASSWORD: $PASSWORD
+      DATABASE: $DATABASE
+      PORT: $PORT
+      SYNCHRONIZE: $SYNCHRONIZE
+      AUTOLOADMODELS: $AUTOLOADMODELS
     depends_on:
       - kvix-db
   kvix-db:
@@ -30,9 +29,9 @@ services:
     volumes:
       - /var/lib/postgresql/data
     environment:
-      POSTGRES_DB: $TYPEORM_DATABASE
-      POSTGRES_USER: $TYPEORM_USERNAME
-      POSTGRES_PASSWORD: $TYPEORM_PASSWORD
+      POSTGRES_DB: $DATABASE
+      POSTGRES_USER: $USERNAME
+      POSTGRES_PASSWORD: $PASSWORD
   kvix-pgadmin:
     image: dpage/pgadmin4
     container_name: kvix-pgadmin
