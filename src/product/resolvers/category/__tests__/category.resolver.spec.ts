@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing';
 
 import { mockProvider } from '../../../../common/utils-test';
 import { CategoryService } from '../../../services/category/category.service';
-import { CategoryResolver } from '../Category.resolver';
+import { CategoryResolver } from '../category.resolver';
 import { lstOfCategoriesMock, categoryMock } from './category.resolver.mocks';
 
 describe('Category.resolver', () => {
