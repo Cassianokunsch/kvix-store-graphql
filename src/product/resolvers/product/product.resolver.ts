@@ -1,59 +1,49 @@
-import { Query, Resolver, Mutation, Args, ResolveField, Root, Parent } from '@nestjs/graphql';
-import { Product } from '../../entities/product.entity';
+import { Query, Resolver, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql';
 
-import { CreateProduct } from '../../dtos/product.input';
-import { ImageService } from '../../services/image.service';
-import { Repository, Connection } from 'typeorm';
-import { InjectRepository, InjectConnection } from '@nestjs/typeorm';
-import { ProductImages } from '../../entities/productImages.entity';
+import { CreateProductDto } from '../../dtos/product/create-product.dto';
 import { Brand } from '../../entities/brand.entity';
 import { Category } from '../../entities/category.entity';
-import { async } from 'rxjs/internal/scheduler/async';
+import { Product } from '../../entities/product.entity';
+import { ProductImages } from '../../entities/productImages.entity';
+import { BrandService } from '../../services/brand/brand.service';
+import { CategoryService } from '../../services/category/category.service';
+import { ProductService } from '../../services/product/product.service';
 
 @Resolver(Product)
 export class ProductResolver {
   constructor(
-    @InjectConnection()
-    private readonly connection: Connection,
-    @InjectRepository(Product)
-    private readonly repository: Repository<Product>,
-    @InjectRepository(ProductImages)
-    private readonly productImagesRepository: Repository<ProductImages>,
-    private readonly imageService: ImageService,
+    private readonly service: ProductService,
+    private readonly brandService: BrandService,
+    private readonly categoryService: CategoryService,
   ) {}
 
   @Query(() => [Product])
   async products(): Promise<Product[]> {
-    return await this.repository.find();
+    return await this.service.findAll();
   }
 
   @Mutation(() => Product)
-  async createProduct(@Args('create') createProduct: CreateProduct): Promise<Product> {
-    const { name, price, description, image, categoryId, brandId } = createProduct;
-    const imageSaved = await this.imageService.processUpload(await image);
+  async createProduct(@Args('create') createProductDto: CreateProductDto): Promise<Product> {
+    return await this.service.create(createProductDto);
+  }
 
-    return await this.connection.transaction(async manager => {
-      const productImagesRepository = manager.getRepository(ProductImages);
-      const productRepository = manager.getRepository(Product);
-      const product = await productRepository.save({ name, price, description, brand: { id: brandId }, category: { id: categoryId } });
-      await productImagesRepository.save({ ...imageSaved, product });
-      return product;
-    });
+  @Mutation(() => Product)
+  async disableProduct(@Args('id') id: string): Promise<void> {
+    await this.service.disable(id);
   }
 
   @ResolveField(() => [ProductImages])
   async images(@Parent() { id }: Product): Promise<ProductImages[]> {
-    return await this.productImagesRepository.find({ where: { product: { id } } });
+    return await this.service.findProductImages(id);
   }
 
-  // @ResolveField()
-  // async brand(@Parent() { id }: Product): Promise<Brand> {
-  //   const { brand } = await this.brandRepository.findOne({ where: {} });
-  //   return brand;
-  // }
+  @ResolveField()
+  async brand(@Parent() { brandId }: Product): Promise<Brand> {
+    return await this.brandService.findById(brandId);
+  }
 
-  // @ResolveField(() => [Category])
-  // async category(): Promise<Category> {
-  //   return null;
-  // }
+  @ResolveField(() => Category)
+  async category(@Parent() { categoryId }: Product): Promise<Category> {
+    return await this.categoryService.findById(categoryId);
+  }
 }

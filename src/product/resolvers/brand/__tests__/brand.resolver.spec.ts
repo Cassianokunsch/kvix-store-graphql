@@ -1,60 +1,52 @@
+import { Test } from '@nestjs/testing';
+
+import { mockProvider } from '../../../../common/utils-test';
+import { BrandService } from '../../../services/brand/brand.service';
 import { BrandResolver } from '../brand.resolver';
-import { Brand } from '../../../entities/brand.entity';
-import { Repository } from 'typeorm';
-import { TestingModule, Test } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { ImageService } from '../../../services/image.service';
-
-const brand = {
-  name: 'Kvix',
-  imageUrl: 'some path',
-};
-
-const lstOfBrands = [brand, brand];
+import { lstOfBrandsMock, brandMock } from './brand.resolver.mocks';
 
 describe('brand.resolver', () => {
   let resolver: BrandResolver;
-  let spyRepository: Repository<Brand>;
-  let spyImageService: ImageService;
+  let service: BrandService;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const module = await Test.createTestingModule({
       providers: [
         BrandResolver,
-        ImageService,
-        {
-          provide: getRepositoryToken(Brand),
-          useValue: {
-            find: jest.fn().mockReturnValue(lstOfBrands),
-            save: jest.fn().mockReturnValue(brand),
-          },
-        },
+        mockProvider(BrandService, {
+          findAll: jest.fn().mockReturnValue(lstOfBrandsMock),
+          create: jest.fn().mockReturnValue(brandMock),
+          disable: jest.fn(),
+        }),
       ],
     }).compile();
-
-    spyRepository = module.get(getRepositoryToken(Brand));
-    spyImageService = module.get<ImageService>(ImageService);
     resolver = module.get<BrandResolver>(BrandResolver);
+    service = module.get<BrandService>(BrandService);
+  });
+
+  it('should be defined', () => {
+    expect(resolver).toBeDefined();
+    expect(service).toBeDefined();
   });
 
   describe('brand.resolver.brands', () => {
     it('should be return an array of brands', async () => {
-      expect(await resolver.brands()).toBe(lstOfBrands);
-      expect(spyRepository.find).toBeCalledTimes(1);
+      expect(await resolver.brands()).toBe(lstOfBrandsMock);
+      expect(service.findAll).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('brand.resolver.createBrand', () => {
     it('should be return an brand created', async () => {
-      jest
-        .spyOn(spyImageService, 'processUpload')
-        .mockImplementation(() => Promise.resolve({ filename: 'filename', path: 'some path' }));
+      expect(await resolver.createBrand({ name: 'Kvix', image: null })).toBe(brandMock);
+      expect(service.create).toHaveBeenCalledTimes(1);
+    });
+  });
 
-      const resp = await resolver.createBrand({ name: 'Kvix', image: null });
-
-      expect(resp.imageUrl).toEqual('some path');
-      expect(resp.name).toEqual('Kvix');
-      expect(spyRepository.save).toBeCalledTimes(1);
+  describe('brand.resolver.disableBrand', () => {
+    it('should be disable an brand', async () => {
+      await resolver.disableBrand('9eccc33a-9b2d-417b-87f1-aadbe884c5c4');
+      expect(service.disable).toHaveBeenCalledTimes(1);
     });
   });
 });

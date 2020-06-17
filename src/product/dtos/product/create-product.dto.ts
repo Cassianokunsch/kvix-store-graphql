@@ -1,10 +1,9 @@
 import { Field, ID, InputType } from '@nestjs/graphql';
 
-import { FileUpload } from '../utils';
-import { GraphQLUpload } from 'apollo-server-fastify';
+import { GraphQLUpload, FileUpload } from 'graphql-upload';
 
 @InputType()
-export class CreateProduct {
+export class CreateProductDto {
   @Field()
   name: string;
 
@@ -20,6 +19,6 @@ export class CreateProduct {
   @Field(() => ID)
   categoryId: string;
 
-  @Field(() => GraphQLUpload)
-  image: Promise<FileUpload>;
+  @Field(() => [GraphQLUpload])
+  images: FileUpload[];
 }

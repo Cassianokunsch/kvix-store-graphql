@@ -1,5 +1,7 @@
-import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
+
+import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
+
 import { AbstractEntity } from '../../common/abstract.entity';
 import { Product } from './product.entity';
 
@@ -9,10 +11,10 @@ export class ProductImages extends AbstractEntity {
   @Column('text')
   filename: string;
 
-  @Column('varchar', { length: 256 })
+  @Column('varchar')
   mimetype: string;
 
-  @Column('varchar', { length: 256 })
+  @Column('varchar')
   encoding: string;
 
   @Field()
@@ -22,6 +24,7 @@ export class ProductImages extends AbstractEntity {
   @ManyToOne(
     () => Product,
     product => product.id,
+    { nullable: false },
   )
   @JoinColumn({ name: 'product_id' })
   product: Product;

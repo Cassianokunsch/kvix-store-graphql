@@ -26,29 +26,32 @@ type Product {
   price: Float!
   brand: Brand!
   category: Category!
-  images: ProductImages!
+  images: [ProductImages!]!
 }
 
 type Query {
-  products: [Product!]!
   brands: [Brand!]!
   categories: [Category!]!
+  products: [Product!]!
 }
 
 type Mutation {
-  createProduct(create: CreateProduct!): Product!
   createBrand(name: String!, image: Upload!): Brand!
+  disableBrand(id: String!): Brand!
   createCategory(name: String!, image: Upload!): Category!
+  disableCategory(id: String!): Category!
+  createProduct(create: CreateProductDto!): Product!
+  disableProduct(id: String!): Product!
 }
 
-input CreateProduct {
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input CreateProductDto {
   name: String!
   description: String!
   price: Float!
   brandId: ID!
   categoryId: ID!
-  image: Upload!
+  images: [Upload!]!
 }
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload

@@ -1,29 +1,25 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+
+import { CreateBrandDto } from '../../dtos/brand/create-brand.dto';
 import { Brand } from '../../entities/brand.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { ImageService } from '../../services/image.service';
-import { CreateBrand } from '../../dtos/brand.input';
+import { BrandService } from '../../services/brand/brand.service';
 
 @Resolver(Brand)
 export class BrandResolver {
-  constructor(
-    @InjectRepository(Brand)
-    private readonly repository: Repository<Brand>,
-    private readonly imageService: ImageService,
-  ) {}
+  constructor(private readonly service: BrandService) {}
 
   @Query(() => [Brand])
   async brands(): Promise<Brand[]> {
-    return await this.repository.find();
+    return await this.service.findAll();
   }
 
   @Mutation(() => Brand)
-  async createBrand(@Args() { name, image }: CreateBrand): Promise<Brand> {
-    const { path } = await this.imageService.processUpload(await image);
-    return await this.repository.save({
-      name,
-      imageUrl: path,
-    });
+  async createBrand(@Args() { name, image }: CreateBrandDto): Promise<Brand> {
+    return await this.service.create(name, image);
+  }
+
+  @Mutation(() => Brand)
+  async disableBrand(@Args('id') id: string): Promise<void> {
+    await this.service.disable(id);
   }
 }
