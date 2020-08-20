@@ -1,6 +1,8 @@
 export const brandMock = {
   name: 'Kvix',
-  imageUrl: 'some path',
+  imageUrl: 'uploads/brand/aa84aeea-c4bf-4639-ba5c-d5b8cff48c06.png',
 };
 
-export const imageStoredMock = { newFilename: 'string', path: 'string', mimetype: 'string', encoding: 'string' };
+export const processUploadMockReturn = { path: 'uploads/category/aa84aeea-c4bf-4639-ba5c-d5b8cff48c06.png' };
+
+export const lstOfBrandsMock = [brandMock, brandMock];
