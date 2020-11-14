@@ -31,27 +31,73 @@ type Product {
 
 type Query {
   brands: [Brand!]!
+  brand(id: String!): Brand!
   categories: [Category!]!
-  products: [Product!]!
+  category(id: String!): Category!
+  products(skip: Int = 0, take: Int = 10, filter: String): [Product!]!
+  product(id: String!): Product!
 }
 
 type Mutation {
-  createBrand(name: String!, image: Upload!): Brand!
+  createBrand(createBrandDto: CreateBrandDto!): Brand!
+  updateBrand(updateBrandDto: UpdateBrandDto!): Brand!
   disableBrand(id: String!): Brand!
-  createCategory(name: String!, image: Upload!): Category!
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   disableCategory(id: String!): Category!
-  createProduct(create: CreateProductDto!): Product!
+  deleteImage(imageId: String!): Boolean!
+  createImage(createImageInput: CreateImageInput!): ProductImages!
+  createProduct(createProductnput: CreateProductnput!): Product!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
   disableProduct(id: String!): Product!
 }
 
-"""The `Upload` scalar type represents a file upload."""
+input CreateBrandDto {
+  name: String!
+  image: Upload!
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
 scalar Upload
 
-input CreateProductDto {
+input UpdateBrandDto {
+  name: String
+  image: Upload
+  id: ID!
+}
+
+input CreateCategoryInput {
+  name: String!
+  image: Upload!
+}
+
+input UpdateCategoryInput {
+  name: String
+  image: Upload
+  id: ID!
+}
+
+input CreateImageInput {
+  productId: ID!
+  image: Upload!
+}
+
+input CreateProductnput {
   name: String!
   description: String!
   price: Float!
   brandId: ID!
   categoryId: ID!
   images: [Upload!]!
+}
+
+input UpdateProductInput {
+  name: String
+  description: String
+  price: Float
+  brandId: ID
+  categoryId: ID
+  id: ID!
 }

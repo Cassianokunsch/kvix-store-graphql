@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { Repository, EntityManager, ObjectType, FindManyOptions, DeepPartial, SaveOptions } from 'typeorm';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
 import { createNamespace } from 'cls-hooked';
-import { Repository, EntityManager, ObjectType, FindManyOptions, DeepPartial, SaveOptions } from 'typeorm';
 
 const cls = createNamespace('app');
 
@@ -38,5 +39,15 @@ export abstract class BaseRepository<T> {
 
   async fakeDelete(data: DeepPartial<T>): Promise<void> {
     await this.repository.softRemove(data);
+  }
+
+  async update(id: string, partialEntity: QueryDeepPartialEntity<T>): Promise<T> {
+    await this.repository.update(id, partialEntity);
+    return await this.findById(id);
+  }
+
+  async delete(id: string): Promise<boolean> {
+    const result = await this.repository.delete(id);
+    return result.affected === 1;
   }
 }

@@ -19,7 +19,7 @@ module.exports = {
       'warn',
       {
         newlinesBetween: 'always',
-        groups: [['/^@nest/', '/^sequelize/'], 'module', '/^@shared/', ['parent', 'sibling', 'index']],
+        groups: [['/^@nest/', '/^typeorm/'], 'module', '/^@shared/', ['parent', 'sibling', 'index']],
         alphabetize: { order: 'asc', ignoreCase: true },
       },
     ],

@@ -7,6 +7,9 @@
   "author": "cassiano.kunsch <cassiano.kunsch@outlook.com>",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": "12.19.0"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -48,6 +51,7 @@
     "@types/jest": "25.1.4",
     "@types/node": "^13.13.5",
     "@types/supertest": "^2.0.8",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^2.23.0",
     "@typescript-eslint/parser": "^2.23.0",
     "eslint": "^6.8.0",

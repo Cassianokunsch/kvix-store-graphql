@@ -45,5 +45,5 @@ services:
       - /var/lib/pgadmin
       - /pgadmin4
     environment:
-      PGADMIN_DEFAULT_PASSWORD: admin
-      PGADMIN_DEFAULT_EMAIL: admin
+      PGADMIN_DEFAULT_EMAIL: kvix@kvix.com.br
+      PGADMIN_DEFAULT_PASSWORD: 1234
