@@ -1,20 +1,35 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+
+import { Brand } from '../database/entities/brand.entity';
+import { CreateBrandInput, UpdateBrandInput } from '../inputs/brand.input';
 import { BrandService } from '../services/brand.service';
-import { Brand } from '../data/entities/brand.entity';
 
 @Resolver(Brand)
 export class BrandResolver {
-  constructor(private readonly _service: BrandService) {}
+  constructor(private readonly service: BrandService) {}
 
-  @Query(() => [Brand], { nullable: true })
+  @Query(() => [Brand])
   async brands(): Promise<Brand[]> {
-    return await this._service.findAll();
+    return await this.service.findAll();
   }
 
-  @Mutation(() => Brand, { nullable: true })
-  async createBrand(@Args({ name: 'name', type: () => String }) name: string): Promise<Brand> {
-    const brand = new Brand();
-    brand.name = name;
-    return await this._service.create(brand);
+  @Query(() => Brand)
+  async brand(@Args('id') id: string): Promise<Brand> {
+    return await this.service.findById(id);
+  }
+
+  @Mutation(() => Brand)
+  async createBrand(@Args('createBrandInput') createBrandInput: CreateBrandInput): Promise<Brand> {
+    return await this.service.create(createBrandInput);
+  }
+
+  @Mutation(() => Brand)
+  async updateBrand(@Args('updateBrandInput') updateBrandInput: UpdateBrandInput): Promise<Brand> {
+    return await this.service.update(updateBrandInput);
+  }
+
+  @Mutation(() => Brand)
+  async disableBrand(@Args('id') id: string): Promise<void> {
+    await this.service.disable(id);
   }
 }

@@ -1,34 +1,38 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 
-import { Product } from '../../data/entities/product.entity';
+import { mockProvider } from '../../../common/utils-test';
+import { ProductRepository } from '../../repositories/product.repository';
+import { ImageService } from '../image.service';
 import { ProductService } from '../product.service';
-import { Repository } from 'typeorm';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { lstOfProduct } from './data.mock';
+import { brandMock, lstOfBrandsMock } from './mock';
 
-describe('Product Service', () => {
+describe('product.service', () => {
   let service: ProductService;
-  let spyRepository: Repository<Product>;
+  let repository: ProductRepository;
+  let imageService: ImageService;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const module = await Test.createTestingModule({
       providers: [
         ProductService,
-        {
-          provide: getRepositoryToken(Product),
-          useValue: { find: jest.fn().mockReturnValue(lstOfProduct) },
-        },
+        mockProvider(ImageService),
+        mockProvider(ProductRepository, {
+          insert: jest.fn().mockReturnValue(brandMock),
+          findAll: jest.fn().mockReturnValue(lstOfBrandsMock),
+          findById: jest.fn().mockReturnValue(brandMock),
+          update: jest.fn().mockReturnValue(brandMock),
+        }),
       ],
     }).compile();
 
-    spyRepository = module.get(getRepositoryToken(Product));
     service = module.get<ProductService>(ProductService);
+    repository = module.get<ProductRepository>(ProductRepository);
+    imageService = module.get<ImageService>(ImageService);
   });
 
-  describe('findAll', () => {
-    it('should return an array of products', async () => {
-      expect(await service.findAll()).toBe(lstOfProduct);
-      expect(spyRepository.find).toBeCalledTimes(1);
-    });
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+    expect(repository).toBeDefined();
+    expect(imageService).toBeDefined();
   });
 });

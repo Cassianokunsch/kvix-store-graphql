@@ -1,19 +1,35 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Query, Resolver, Mutation, Args } from '@nestjs/graphql';
 
+import { Category } from '../database/entities/category.entity';
+import { CreateCategoryInput, UpdateCategoryInput } from '../inputs/category.inputs';
 import { CategoryService } from '../services/category.service';
-import { Category } from '../data/entities/category.entity';
 
 @Resolver(Category)
 export class CategoryResolver {
-  constructor(private readonly _service: CategoryService) {}
+  constructor(private readonly service: CategoryService) {}
 
-  @Query(() => [Category], { nullable: true })
+  @Query(() => [Category])
   async categories(): Promise<Category[]> {
-    return await this._service.findAll();
+    return await this.service.findAll();
   }
 
-  //   @Mutation(() => Category, { nullable: true })
-  //   async createCategory(@Args('file', () => GraphQLUpload) file: Upload, @Args('name') name: string): Promise<Category> {
-  //     return (await this._service.createCategory(file, name)) as Category;
-  //   }
+  @Query(() => Category)
+  async category(@Args('id') id: string): Promise<Category> {
+    return await this.service.findById(id);
+  }
+
+  @Mutation(() => Category)
+  async createCategory(@Args('createCategoryInput') createCategoryInput: CreateCategoryInput): Promise<Category> {
+    return await this.service.create(createCategoryInput);
+  }
+
+  @Mutation(() => Category)
+  async updateCategory(@Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput): Promise<Category> {
+    return await this.service.update(updateCategoryInput);
+  }
+
+  @Mutation(() => Category)
+  async disableCategory(@Args('id') id: string): Promise<void> {
+    await this.service.disable(id);
+  }
 }
