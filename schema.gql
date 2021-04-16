@@ -39,8 +39,8 @@ type Query {
 }
 
 type Mutation {
-  createBrand(createBrandDto: CreateBrandDto!): Brand!
-  updateBrand(updateBrandDto: UpdateBrandDto!): Brand!
+  createBrand(createBrandInput: CreateBrandInput!): Brand!
+  updateBrand(updateBrandInput: UpdateBrandInput!): Brand!
   disableBrand(id: String!): Brand!
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
@@ -52,30 +52,28 @@ type Mutation {
   disableProduct(id: String!): Product!
 }
 
-input CreateBrandDto {
-  name: String!
+input CreateBrandInput {
   image: Upload!
+  name: String!
 }
 
-"""
-The `Upload` scalar type represents a file upload.
-"""
+"""The `Upload` scalar type represents a file upload."""
 scalar Upload
 
-input UpdateBrandDto {
-  name: String
+input UpdateBrandInput {
   image: Upload
+  name: String
   id: ID!
 }
 
 input CreateCategoryInput {
-  name: String!
   image: Upload!
+  name: String!
 }
 
 input UpdateCategoryInput {
-  name: String
   image: Upload
+  name: String
   id: ID!
 }
 
@@ -85,19 +83,19 @@ input CreateImageInput {
 }
 
 input CreateProductnput {
-  name: String!
-  description: String!
-  price: Float!
   brandId: ID!
   categoryId: ID!
   images: [Upload!]!
+  name: String!
+  description: String!
+  price: Float!
 }
 
 input UpdateProductInput {
+  brandId: ID
+  categoryId: ID
   name: String
   description: String
   price: Float
-  brandId: ID
-  categoryId: ID
   id: ID!
 }

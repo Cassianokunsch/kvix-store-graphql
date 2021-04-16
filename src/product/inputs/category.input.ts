@@ -3,7 +3,7 @@ import { Field, ID, InputType, PartialType } from '@nestjs/graphql';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
 
 @InputType()
-export class CreateBrandInput {
+export class CreateCategoryInput {
   name: string;
 
   @Field(() => GraphQLUpload)
@@ -11,7 +11,7 @@ export class CreateBrandInput {
 }
 
 @InputType()
-export class UpdateBrandInput extends PartialType(CreateBrandInput) {
+export class UpdateCategoryInput extends PartialType(CreateCategoryInput) {
   @Field(() => ID)
   id: string;
 }

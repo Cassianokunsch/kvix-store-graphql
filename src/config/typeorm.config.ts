@@ -9,7 +9,7 @@ export const typeormConfig: TypeOrmModuleOptions = {
   port: Number(process.env.TYPEORM_PORT) || 5432,
   synchronize: false,
   migrations: ['dist/**/database/migrations/*.js'],
-  entities: ['dist/**/*.entity.js'],
+  entities: ['dist/**/*.entity{.ts,.js}'],
   migrationsRun: true,
   logging: process.env.NODE_ENV === 'production' ? false : true,
 };

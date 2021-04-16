@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { Category } from '../database/entities/category.entity';
-import { CreateCategoryInput, UpdateCategoryInput } from '../inputs/category.inputs';
+import { CreateCategoryInput, UpdateCategoryInput } from '../inputs/category.input';
 import { CategoryRepository } from '../repositories/category.repository';
 import { ImageService } from './image.service';
 

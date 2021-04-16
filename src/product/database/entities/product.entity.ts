@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { HideField, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
 import { AbstractEntity } from '../../../common/abstract.entity';
@@ -9,19 +9,15 @@ import { ProductImages } from './productImages.entity';
 @ObjectType()
 @Entity()
 export class Product extends AbstractEntity {
-  @Field()
   @Column('varchar')
   name: string;
 
-  @Field()
   @Column('varchar')
   description: string;
 
-  @Field()
   @Column('float8')
   price: number;
 
-  @Field(() => Brand)
   @ManyToOne(
     () => Brand,
     brand => brand.id,
@@ -30,10 +26,10 @@ export class Product extends AbstractEntity {
   @JoinColumn({ name: 'brand_id' })
   brand: Brand;
 
+  @HideField()
   @Column({ type: 'uuid', name: 'brand_id' })
   brandId: string;
 
-  @Field(() => Category)
   @ManyToOne(
     () => Category,
     category => category.id,
@@ -42,10 +38,10 @@ export class Product extends AbstractEntity {
   @JoinColumn({ name: 'category_id' })
   category: Category;
 
+  @HideField()
   @Column({ type: 'uuid', name: 'category_id' })
   categoryId: string;
 
-  @Field(() => [ProductImages])
   @OneToMany(
     () => ProductImages,
     productImages => productImages.product,

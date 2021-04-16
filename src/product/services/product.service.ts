@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Like } from 'typeorm';
 
-import { PaginationArgs } from '../../common/pagination-args';
+import { PaginationArgs } from '../../common/pagination.args';
 import { Product } from '../database/entities/product.entity';
-import { CreateProductnput, UpdateProductInput } from '../inputs/product.inputs';
+import { CreateProductnput, UpdateProductInput } from '../inputs/product.input';
 import { ProductRepository } from '../repositories/product.repository';
 import { ImageService } from './image.service';
 

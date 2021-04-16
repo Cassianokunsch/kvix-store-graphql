@@ -1,11 +1,11 @@
 import { Query, Resolver, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql';
 
-import { PaginationArgs } from '../../common/pagination-args';
+import { PaginationArgs } from '../../common/pagination.args';
 import { Brand } from '../database/entities/brand.entity';
 import { Category } from '../database/entities/category.entity';
 import { Product } from '../database/entities/product.entity';
 import { ProductImages } from '../database/entities/productImages.entity';
-import { CreateProductnput, UpdateProductInput } from '../inputs/product.inputs';
+import { CreateProductnput, UpdateProductInput } from '../inputs/product.input';
 import { BrandService } from '../services/brand.service';
 import { CategoryService } from '../services/category.service';
 import { ImageService } from '../services/image.service';

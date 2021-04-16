@@ -1,7 +1,7 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
 import { ProductImages } from '../database/entities/productImages.entity';
-import { CreateImageInput } from '../inputs/image.inputs';
+import { CreateImageInput } from '../inputs/image.input';
 import { ImageService } from '../services/image.service';
 
 @Resolver(ProductImages)
